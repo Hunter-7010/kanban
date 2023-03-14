@@ -16,7 +16,7 @@ import Steps from "~/components/steps";
 const Landing: NextPage = () => {
   const [open, setOpen] = useState(false);
   return (
-    <div className="dark relative bg-gradient-to-b from-[#101212] to-[#08201D] text-white">
+    <div className="relative bg-gradient-to-b from-[#101212] to-[#08201D] text-white">
       <Navbar />
       <Hero />
       <Feature/>
