@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Link from "next/link";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -24,16 +25,16 @@ const Navbar = () => {
             {" "}
             Log in{" "}
           </a>
-
-          <a
-            href="#"
-            title=""
-            className="inline-flex items-center justify-center rounded-lg bg-white/20 px-3 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-white/40 focus:bg-white/40 sm:px-5 sm:text-base"
-            role="button"
-          >
-            {" "}
-            Apply for free{" "}
-          </a>
+          <Link href="/home">
+            <span
+              title=""
+              className="inline-flex items-center justify-center rounded-lg bg-white/20 px-3 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-white/40 focus:bg-white/40 sm:px-5 sm:text-base"
+              role="button"
+            >
+              {" "}
+              Dashboard{" "}
+            </span>
+          </Link>
         </div>
         <button
           type="button"

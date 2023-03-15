@@ -1,21 +1,25 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useState } from "react";
 import { api } from "~/utils/api";
 
-import Navbar from "~/components/navbar";
-import Hero from "~/components/hero";
-import Footer from "~/components/footer";
-import Faqs from "~/components/faqs";
-import Feature from "~/components/feature";
-import Features from "~/components/features";
-import Steps from "~/components/steps";
+import Navbar from "~/components/landing/navbar";
+import Hero from "~/components/landing/hero";
+import Footer from "~/components/landing/footer";
+import Faqs from "~/components/landing/faqs";
+import Feature from "~/components/landing/feature";
+import Features from "~/components/landing/features";
+import Steps from "~/components/landing/steps";
 
 const Landing: NextPage = () => {
-  const [open, setOpen] = useState(false);
   return (
+    <>
+     <Head>
+        <title>Kanban</title>
+        <meta name="description" content="Manage your daily tasks" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
     <div className="relative bg-gradient-to-b from-[#101212] to-[#08201D] text-white">
       <Navbar />
       <Hero />
@@ -25,6 +29,7 @@ const Landing: NextPage = () => {
       <Faqs/>
       <Footer/>
     </div>
+    </>
   );
 };
 
