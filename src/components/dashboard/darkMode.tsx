@@ -1,6 +1,6 @@
-type Props = {};
+// type Props = {};
 
-const DarkMode = (props: Props) => {
+const DarkMode = () => {
   return (
     <>
       <div className="absolute inset-x-5 bottom-24 z-10 flex h-[48px] w-[235px] items-center justify-center space-x-5 rounded-lg bg-gray-100">
