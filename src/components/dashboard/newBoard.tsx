@@ -70,9 +70,7 @@ export default function NewBoard() {
     },
   });
 
-  const formSubmitHandler: SubmitHandler<boardFormSchemaType> = (
-    data
-  ) => {
+  const formSubmitHandler: SubmitHandler<boardFormSchemaType> = (data) => {
     mutate(data);
     console.log(data);
   };
@@ -127,6 +125,7 @@ export default function NewBoard() {
                     </a>
                   </Dialog.Title>
                   <form
+                    //   eslint-disable-next-line
                     onSubmit={handleSubmit(formSubmitHandler)}
                     className="pb-8"
                   >
@@ -135,6 +134,10 @@ export default function NewBoard() {
                         className={`peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent py-2.5 px-0 text-sm text-gray-900 focus:border-indigo-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-indigo-500 ${
                           errors.title
                             ? "border border-red-500 bg-red-50 text-red-900 placeholder-red-700 duration-300 focus:border-red-500 focus:ring-red-500  dark:border-red-400 dark:bg-red-100"
+                            : ""
+                        } ${
+                          isSubmitSuccessful
+                            ? "border border-green-500 bg-green-50 text-green-900 placeholder-green-700 duration-300 focus:border-green-500 focus:ring-green-500  dark:border-green-400 dark:bg-green-100"
                             : ""
                         }`}
                         placeholder=" "
@@ -146,6 +149,10 @@ export default function NewBoard() {
                         className={`absolute top-3 z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-indigo-600 dark:text-gray-400 peer-focus:dark:text-indigo-500 ${
                           errors.title
                             ? "text-red-600 peer-focus:text-red-600 dark:text-red-500"
+                            : ""
+                        } ${
+                          isSubmitSuccessful
+                            ? "text-green-600 peer-focus:text-green-600 dark:text-green-500"
                             : ""
                         }`}
                       >
