@@ -53,3 +53,35 @@ model VerificationToken {
 
     @@unique([identifier, token])
 }
+
+model Board {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    title     String   @unique
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    tasks     Task[]
+}
+
+model Task {
+    id          String  @id @default(auto()) @map("_id") @db.ObjectId
+    title       String  @unique
+    boardId     String  @db.ObjectId
+    color       String  @default("#63fcb4")
+
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+    board     Board     @relation(fields: [boardId], references: [id], onDelete: Cascade)
+    subTasks  SubTask[]
+}
+
+model SubTask {
+    id       String @id @default(auto()) @map("_id") @db.ObjectId
+    title    String
+    description String?
+    subtasks Json[]
+
+    taskId    String   @db.ObjectId
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+}
