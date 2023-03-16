@@ -70,7 +70,7 @@ export default function NewBoard() {
     },
   });
 
-  const formSubmitHandler: SubmitHandler<boardFormSchemaType> = async (
+  const formSubmitHandler: SubmitHandler<boardFormSchemaType> = (
     data
   ) => {
     mutate(data);
