@@ -77,8 +77,9 @@ model Task {
 model SubTask {
     id       String @id @default(auto()) @map("_id") @db.ObjectId
     title    String
+    finished Boolean @default(false)
     description String?
-    subtasks Json[]
+    subtasks String[]
 
     taskId    String   @db.ObjectId
     createdAt DateTime @default(now())

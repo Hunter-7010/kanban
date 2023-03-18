@@ -49,7 +49,7 @@ export default function NewBoard() {
         progress: undefined,
         theme: "light",
       });
-      //   ctx.dashboard.
+      ctx.dashboard.getAllBoards.invalidate();
       setIsOpen(false);
       setValue("title", "");
     },
@@ -110,12 +110,12 @@ export default function NewBoard() {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-2xl bg-white py-12 px-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-full min-h-[18rem] max-w-lg transform overflow-hidden rounded-2xl bg-white py-12 px-6 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h3"
                     className="relative mb-4 flex justify-between text-lg font-medium leading-6 text-gray-900 dark:text-white"
                   >
-                    <p>Add New Board</p>
+                    <p className="mb-4">Add New Board</p>
                     <a
                       className=" absolute -right-4 -top-6 cursor-pointer items-start px-4 text-gray-500 duration-300 hover:text-gray-400 md:w-auto"
                       type="button"
@@ -159,6 +159,8 @@ export default function NewBoard() {
                         Title
                       </label>
                     </div>
+                    <div className="flex justify-between mt-12">
+                      <div/>
                     <button
                       type="submit"
                       className="group relative inline-flex items-center overflow-hidden rounded-r-full rounded-l-full bg-indigo-600 px-8 py-3 text-white focus:outline-none focus:ring active:bg-indigo-500"
@@ -171,6 +173,8 @@ export default function NewBoard() {
                         Create New Board
                       </span>
                     </button>
+                    </div>
+                      
                   </form>
                 </Dialog.Panel>
               </Transition.Child>

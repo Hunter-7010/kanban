@@ -1,17 +1,52 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { useState, useRef } from "react";
 
 import { api } from "~/utils/api";
 
 import NewBoard from "~/components/dashboard/newBoard";
 import DarkMode from "~/components/dashboard/darkMode";
-import Board from "~/components/svgs/board";
+import Boards from "~/components/dashboard/boards";
+import BoardsLoading from "~/components/dashboard/boardsLoading";
+import NewTask from "~/components/dashboard/newTask";
+import LoadingOneBoard from "~/components/dashboard/loadingOneBoard";
+import NoBoardSelected from "~/components/dashboard/noBoardSelected";
 
 const Home: NextPage = () => {
-  // const hello = api.dashboard.hello.useQuery({ text: "from tRPC" });
+  const [boardId, setBoardId] = useState("");
+  const newTaskButtonRef = useRef<HTMLButtonElement>(null);
 
+  // const hello = api.dashboard.hello.useQuery({ text: "from tRPC" });
+  // getting boards
+  const {
+    data: boardData,
+    isLoading,
+    isError,
+    isSuccess,
+  } = api.dashboard.getAllBoards.useQuery();
+  //getting one board
+  const {
+    data: oneBoardData,
+    isLoading: isLoadingOneBoard,
+    isSuccess: isSuccessOneBoard,
+    isError: isErrorOneBoard,
+  } = api.dashboard.getOneBoard.useQuery({ boardId });
+
+  const handleBoardClick = (boardId: string) => {
+    setBoardId(boardId);
+    // getOneBoard({ boardId: boardId });
+  };
+  const handleNewTaskClick = () => {
+    // Trigger click event on the child button
+    if (newTaskButtonRef.current) {
+      newTaskButtonRef.current.click();
+    }
+  };
+  if (isSuccessOneBoard) {
+    console.log(oneBoardData);
+  }
+  console.log("boards", boardId);
   return (
     <>
       <Head>
@@ -25,110 +60,157 @@ const Home: NextPage = () => {
             Kanban
           </div>
           <div className="flex h-[41.2rem] w-full flex-col bg-white text-gray-400 antialiased">
+            <DarkMode />
             <h2 className="p-5 text-sm font-semibold tracking-widest">
               ALL BOARDS (4)
             </h2>
-            <div className="relative space-y-1 pr-6">
+            <div className="relative space-y-1 overflow-y-auto  pr-6">
               <NewBoard />
-              <h3 className="flex cursor-pointer items-center space-x-5 rounded-r-full py-4 pl-8 hover:bg-indigo-300 hover:text-white">
-                <Board />
-                <p className="max-w-[190px] overflow-hidden truncate">
-                  Marketing Plan Marketing Plan Marketing Plan Marketing Plan
-                </p>
-              </h3>
+              {boardData ? (
+                boardData?.map((board) => (
+                  <div onClick={() => handleBoardClick(board.id)}>
+                    <Boards
+                      title={board.title}
+                      currentBoardId={boardId}
+                      boardId={board.id}
+                      key={board.id}
+                    />
+                  </div>
+                ))
+              ) : (
+                <BoardsLoading />
+              )}
             </div>
-            <DarkMode />
           </div>
         </div>
-        <div className="flex grow flex-col overflow-y-auto">
-          <div className="flex h-[96px] items-center justify-between border-b bg-white">
-            <h1 className="pl-10 text-2xl font-bold antialiased">
-              Marketing Plan
-            </h1>
-            <div className="flex space-x-4 pr-10">
-              <button className="flex items-center justify-center rounded-l-full rounded-r-full bg-indigo-500 py-2.5 px-6 text-white">
-                + Add New Task
-              </button>
-              <div className="group flex items-center justify-center rounded-3xl duration-300 hover:bg-gray-300">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 32.055 32.055"
-                  fill="current"
-                  className="h-6 w-6 rotate-90 cursor-pointer p-1 duration-300 group-hover:fill-gray-600"
+        {oneBoardData ? (
+          <div className="flex grow flex-col overflow-y-auto">
+            <div className="flex h-[96px] items-center justify-between border-b bg-white">
+              <h1 className="pl-10 text-2xl font-bold antialiased">
+                {oneBoardData.title}
+              </h1>
+              <div className="flex space-x-4 pr-10">
+                <NewTask boardId={boardId} buttonRef={newTaskButtonRef} />
+                <div className="group flex items-center justify-center rounded-3xl duration-300 hover:bg-gray-300">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 32.055 32.055"
+                    fill="current"
+                    className="h-6 w-6 rotate-90 cursor-pointer p-1 duration-300 group-hover:fill-gray-600"
+                  >
+                    <path d="M3.968 12.061A3.965 3.965 0 000 16.027a3.965 3.965 0 003.968 3.967 3.966 3.966 0 100-7.933zm12.265 0a3.967 3.967 0 00-3.968 3.965c0 2.192 1.778 3.967 3.968 3.967s3.97-1.772 3.97-3.967a3.97 3.97 0 00-3.97-3.965zm11.857 0a3.967 3.967 0 10-.005 7.933 3.967 3.967 0 00.005-7.933z"></path>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div className="flex h-full w-full flex-wrap overflow-y-auto bg-gray-100">
+              {oneBoardData.tasks.map((task) => (
+                <div
+                  key={task.id}
+                  className="my-4 ml-16 h-[580px] w-[280px] space-y-6 overflow-y-auto rounded-lg"
                 >
-                  <path d="M3.968 12.061A3.965 3.965 0 000 16.027a3.965 3.965 0 003.968 3.967 3.966 3.966 0 100-7.933zm12.265 0a3.967 3.967 0 00-3.968 3.965c0 2.192 1.778 3.967 3.968 3.967s3.97-1.772 3.97-3.967a3.97 3.97 0 00-3.97-3.965zm11.857 0a3.967 3.967 0 10-.005 7.933 3.967 3.967 0 00.005-7.933z"></path>
-                </svg>
-              </div>
-            </div>
-          </div>
-          <div className="flex h-full w-full flex-wrap overflow-y-auto bg-gray-100">
-            <div className="my-4 ml-16 h-[580px] w-[280px] space-y-6 overflow-y-auto rounded-lg">
-              <div className="flex items-center space-x-2 pt-8">
-                <div className="h-5 w-5 rounded-full bg-lime-400"></div>
-                <p className="text-sm font-semibold tracking-widest text-gray-400">
-                  Todo
-                </p>
-              </div>
-              <div className="flex h-[121px] items-center justify-center rounded-lg bg-white shadow-lg duration-500 hover:opacity-90 hover:shadow-sm">
-                <div className="px-4">
-                  <h4 className="mb-1 font-semibold">
-                    Write launch article to publish on multiple channels
-                  </h4>
-                  <p className="text-sm font-semibold text-gray-400">
-                    0 of 4 subtasks
+                  <div className="flex items-center space-x-2 pt-8">
+                    <div
+                      className="h-5 w-5 rounded-full"
+                      style={{ backgroundColor: "#" + task.color }}
+                    ></div>
+                    <p className="text-sm font-semibold tracking-widest text-gray-400">
+                      {task.title}
+                    </p>
+                  </div>
+                  {task.subTasks.map((subTask) => (
+                    <div
+                      key={subTask.id}
+                      className="flex h-[121px] items-center justify-center rounded-lg bg-white shadow-lg duration-500 hover:opacity-90 hover:shadow-sm"
+                    >
+                      <div className="px-4">
+                        <h4 className="mb-1 font-semibold">{subTask.title}</h4>
+                        <p className="text-sm font-semibold text-gray-400">
+                          {`${
+                            subTask.subtasks.filter(
+                              (task: any) => task.finished
+                            ).length
+                          } of ${subTask.subtasks.length} subtasks`}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ))}
+              <div className="my-4 ml-16 h-[580px] w-[280px] space-y-6 overflow-y-auto rounded-lg">
+                <div className="flex items-center space-x-2 pt-8">
+                  <div className="h-5 w-5 rounded-full bg-lime-400"></div>
+                  <p className="text-sm font-semibold tracking-widest text-gray-400">
+                    Todo
                   </p>
                 </div>
-              </div>
-              <div className="flex h-[121px] items-center justify-center rounded-lg bg-white shadow-lg duration-500 hover:opacity-90 hover:shadow-sm">
-                <div className="px-4">
-                  <h4 className="mb-1 font-semibold">
-                    Write launch article to publish on multiple channels
-                  </h4>
-                  <p className="text-sm font-semibold text-gray-400">
-                    0 of 4 subtasks
-                  </p>
+                <div className="flex h-[121px] items-center justify-center rounded-lg bg-white shadow-lg duration-500 hover:opacity-90 hover:shadow-sm">
+                  <div className="px-4">
+                    <h4 className="mb-1 font-semibold">
+                      Write launch article to publish on multiple channels
+                    </h4>
+                    <p className="text-sm font-semibold text-gray-400">
+                      0 of 4 subtasks
+                    </p>
+                  </div>
+                </div>
+                <div className="flex h-[121px] items-center justify-center rounded-lg bg-white shadow-lg duration-500 hover:opacity-90 hover:shadow-sm">
+                  <div className="px-4">
+                    <h4 className="mb-1 font-semibold">
+                      Write launch article to publish on multiple channels
+                    </h4>
+                    <p className="text-sm font-semibold text-gray-400">
+                      0 of 4 subtasks
+                    </p>
+                  </div>
+                </div>
+                <div className="flex h-[121px] items-center justify-center rounded-lg bg-white shadow-lg duration-500 hover:opacity-90 hover:shadow-sm">
+                  <div className="px-4">
+                    <h4 className="mb-1 font-semibold">
+                      Write launch article to publish on multiple channels
+                    </h4>
+                    <p className="text-sm font-semibold text-gray-400">
+                      0 of 4 subtasks
+                    </p>
+                  </div>
+                </div>
+                <div className="flex h-[121px] items-center justify-center rounded-lg bg-white shadow-lg duration-500 hover:opacity-90 hover:shadow-sm">
+                  <div className="px-4">
+                    <h4 className="mb-1 font-semibold">
+                      Write launch article to publish on multiple channels
+                    </h4>
+                    <p className="text-sm font-semibold text-gray-400">
+                      0 of 4 subtasks
+                    </p>
+                  </div>
+                </div>
+                <div className="flex h-[121px] items-center justify-center rounded-lg bg-white shadow-lg duration-500 hover:opacity-90 hover:shadow-sm">
+                  <div className="px-4">
+                    <h4 className="mb-1 font-semibold">
+                      Write launch article to publish on multiple channels
+                    </h4>
+                    <p className="text-sm font-semibold text-gray-400">
+                      0 of 4 subtasks
+                    </p>
+                  </div>
                 </div>
               </div>
-              <div className="flex h-[121px] items-center justify-center rounded-lg bg-white shadow-lg duration-500 hover:opacity-90 hover:shadow-sm">
-                <div className="px-4">
-                  <h4 className="mb-1 font-semibold">
-                    Write launch article to publish on multiple channels
-                  </h4>
-                  <p className="text-sm font-semibold text-gray-400">
-                    0 of 4 subtasks
-                  </p>
-                </div>
-              </div>
-              <div className="flex h-[121px] items-center justify-center rounded-lg bg-white shadow-lg duration-500 hover:opacity-90 hover:shadow-sm">
-                <div className="px-4">
-                  <h4 className="mb-1 font-semibold">
-                    Write launch article to publish on multiple channels
-                  </h4>
-                  <p className="text-sm font-semibold text-gray-400">
-                    0 of 4 subtasks
-                  </p>
-                </div>
-              </div>
-              <div className="flex h-[121px] items-center justify-center rounded-lg bg-white shadow-lg duration-500 hover:opacity-90 hover:shadow-sm">
-                <div className="px-4">
-                  <h4 className="mb-1 font-semibold">
-                    Write launch article to publish on multiple channels
-                  </h4>
-                  <p className="text-sm font-semibold text-gray-400">
-                    0 of 4 subtasks
-                  </p>
-                </div>
-              </div>
-            </div>
 
-            <div className="group my-12 ml-16 flex h-[550px] w-[280px] items-center justify-center rounded-lg bg-gradient-to-b from-gray-300 to-white">
-              <h2 className="text-2xl font-bold text-gray-400 duration-300 group-hover:text-indigo-600">
-                + New Column
-              </h2>
+              <div
+                onClick={handleNewTaskClick}
+                className="group my-12 ml-16 flex h-[550px] w-[280px] cursor-pointer items-center justify-center rounded-lg bg-gradient-to-b from-gray-300 to-white"
+              >
+                <h2 className="text-2xl font-bold text-gray-400 duration-300 group-hover:text-indigo-600">
+                  + New Column
+                </h2>
+              </div>
             </div>
           </div>
-        </div>
-     
+        ) : isLoadingOneBoard ? (
+          <LoadingOneBoard />
+        ) : (
+          <NoBoardSelected />
+        )}
       </main>
     </>
   );
