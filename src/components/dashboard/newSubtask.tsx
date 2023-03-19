@@ -10,10 +10,22 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import X from "../svgs/x";
 import UpArrow from "../svgs/upArrow";
 import DownArrow from "../svgs/downArrow";
+import SubTasksAutoComplete from "./subtasksAutoComplete";
 type Props = {
-  boardId: string;
+  task: {
+    id: string;
+    title: string;
+    boardId: string;
+    color: string;
+
+    createdAt: Date;
+    updatedAt: Date;
+    subTasks: [];
+  }[];
 };
-export default function NewTask({ boardId }: Props) {
+export default function NewSubTask({ task }: Props) {
+  const taskTitles = [] as { title: string; id: string }[];
+  task.map((task) => taskTitles.push({ id: task.id, title: task.title }));
   const [isOpen, setIsOpen] = useState(false);
   const ctx = api.useContext();
 
@@ -27,14 +39,15 @@ export default function NewTask({ boardId }: Props) {
   //react hook form
 
   const taskFormSchema = z.object({
-    title: z.string().min(1, { message: "Must be 1 or more characters long" }),
-    boardId: z.string(),
+    titleId: z.string().min(24, { message: "Must be selected from the list" }),
+    title: z.string(),
     description: z.string(),
     subTasks: z.array(
       z.object({
         title: z
           .string()
           .min(1, { message: "Must be 1 or more characters long" }),
+        finished: z.boolean().default(false),
       })
     ),
   });
@@ -42,9 +55,9 @@ export default function NewTask({ boardId }: Props) {
   //default data
   const formData = {
     title: "",
-    boardId: boardId,
+    titleId: "",
     description: "",
-    subTasks: [{ title: "" }],
+    subTasks: [{ title: "", finished: false }],
   };
   const {
     register,
@@ -73,7 +86,7 @@ export default function NewTask({ boardId }: Props) {
   };
 
   //trpc create task
-  const { mutate } = api.dashboard.newTask.useMutation({
+  const { mutate } = api.dashboard.newSubTask.useMutation({
     onSuccess: (data) => {
       toast.success("task Created!", {
         position: "top-right",
@@ -105,22 +118,24 @@ export default function NewTask({ boardId }: Props) {
       );
     },
   });
+  const onOptionClickHandler = (subtask: string, id: string) => {
+    setValue("titleId", id);
+  };
 
   const formSubmitHandler: SubmitHandler<taskFormSchemaType> = async (data) => {
     mutate(data);
   };
   const [parent] = useAutoAnimate();
+  const [idErrorAnimationParent] = useAutoAnimate();
 
   return (
     <>
-      <div
+      <button
         onClick={openModal}
-        className="group my-12 ml-16 flex h-[550px] w-[280px] cursor-pointer items-center justify-center rounded-lg bg-gradient-to-b from-gray-300 to-white"
+        className="flex items-center justify-center rounded-l-full rounded-r-full bg-indigo-500 py-2.5 px-6 text-white duration-300 hover:opacity-70"
       >
-        <h2 className="text-2xl font-bold text-gray-400 duration-300 group-hover:text-indigo-600">
-          + New Column
-        </h2>
-      </div>
+        + Add New Task
+      </button>
 
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
@@ -166,12 +181,29 @@ export default function NewTask({ boardId }: Props) {
                     onSubmit={handleSubmit(formSubmitHandler)}
                     className=" w-full space-y-8"
                   >
-                    <input
-                      type="hidden"
-                      {...register("boardId")}
-                      value={boardId}
-                    />
-
+                    <div ref={idErrorAnimationParent}>
+                      <label
+                        htmlFor="title"
+                        className="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
+                      >
+                        Task Title
+                      </label>
+                      <input
+                        type="hidden"
+                        readOnly
+                        id="title"
+                        {...register("titleId")}
+                      />
+                      <SubTasksAutoComplete
+                        subTasks={taskTitles}
+                        onOptionClick={onOptionClickHandler}
+                      />
+                      {errors.titleId && (
+                        <p className="text-sm text-red-600 mt-1">
+                          {errors.titleId.message}
+                        </p>
+                      )}
+                    </div>
                     <div>
                       <label
                         htmlFor="title"
@@ -280,6 +312,7 @@ export default function NewTask({ boardId }: Props) {
                       onClick={() =>
                         append({
                           title: "",
+                          finished: false,
                         })
                       }
                       className="inline-flex w-full justify-center rounded-md border border-transparent bg-emerald-100 px-4 py-2 text-sm font-medium text-emerald-900 hover:bg-emerald-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"

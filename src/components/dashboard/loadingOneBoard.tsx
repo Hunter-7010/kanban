@@ -2,7 +2,7 @@ const LoadingOneBoard = () => {
   return (
     <div className="flex grow flex-col overflow-y-auto">
       <div className="flex h-[96px] items-center justify-between border-b bg-white">
-        <h1 className="h-3 animate-pulse w-44 rounded-2xl bg-gray-400 pl-10 text-2xl font-bold antialiased"></h1>
+        <h1 className="h-3 animate-pulse w-44 rounded-2xl bg-gray-400 ml-10 text-2xl font-bold antialiased"></h1>
         <div className="flex animate-pulse space-x-4 pr-10">
           <div className="group flex items-center justify-center rounded-3xl duration-300 hover:bg-gray-300">
             <svg

@@ -12,7 +12,9 @@ export const dashboardRouter = createTRPCRouter({
   //   // return ctx.prisma.example.findMany();
   // }),
   getAllBoards: publicProcedure.query(async ({ ctx }) => {
-    return await ctx.prisma.board.findMany({});
+    const boardsCount = await ctx.prisma.board.count({});
+    const boards = await ctx.prisma.board.findMany({});
+    return { boards, boardsCount };
   }),
 
   getOneBoard: publicProcedure
@@ -30,9 +32,36 @@ export const dashboardRouter = createTRPCRouter({
           include: {
             tasks: {
               include: {
-                subTasks: true,
+                subTasks: {
+                  orderBy: { finished: "asc" },
+                  include: {
+                    subtasks: {
+                      orderBy: { finished: "asc" },
+                    },
+                  },
+                },
               },
+              orderBy: { createdAt: "desc" },
             },
+          },
+        });
+      }
+    }),
+
+  getOneSubTask: publicProcedure
+    .input(
+      z.object({
+        subTaskId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      if (input.subTaskId != "") {
+        return await ctx.prisma.subTask.findUnique({
+          where: {
+            id: input.subTaskId,
+          },
+          include: {
+            subtasks: { orderBy: { finished: "asc" } },
           },
         });
       }
@@ -79,12 +108,70 @@ export const dashboardRouter = createTRPCRouter({
           data: {
             title: subtask.title,
             taskId: task.id,
-            description: input.description,
           },
         });
       });
     }),
+  newSubTask: publicProcedure
+    .input(
+      z.object({
+        titleId: z.string().min(1),
+        description: z.string(),
+        title: z.string(),
 
+        subTasks: z.array(
+          z.object({
+            title: z.string(),
+            finished: z.boolean().default(false),
+          })
+        ),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const subTasks = [] as any;
+      input.subTasks.map(async (subtask) => {
+        subTasks.push(subtask);
+      });
+      const task = await ctx.prisma.subTask.create({
+        data: {
+          taskId: input.titleId,
+          title: input.title,
+          description: input.description,
+        },
+      });
+      input.subTasks.map(async (subtask) => {
+        await ctx.prisma.points.create({
+          data: {
+            title: subtask.title,
+            subTaskId: task.id,
+          },
+        });
+      });
+      return task;
+    }),
+
+  newPoints: publicProcedure
+    .input(
+      z.object({
+        subTaskId: z.string().min(24),
+        subTasks: z.array(
+          z.object({
+            title: z.string(),
+            finished: z.boolean().default(false),
+          })
+        ),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      input.subTasks.map(async (subtask) => {
+        await ctx.prisma.points.create({
+          data: {
+            title: subtask.title,
+            subTaskId: input.subTaskId,
+          },
+        });
+      });
+    }),
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";
   }),

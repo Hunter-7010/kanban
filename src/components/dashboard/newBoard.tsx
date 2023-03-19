@@ -72,7 +72,6 @@ export default function NewBoard() {
 
   const formSubmitHandler: SubmitHandler<boardFormSchemaType> = (data) => {
     mutate(data);
-    console.log(data);
   };
 
   return (

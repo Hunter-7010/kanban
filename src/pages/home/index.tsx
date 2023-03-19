@@ -1,7 +1,7 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { useState, useRef } from "react";
+import { useState } from "react";
 
 import { api } from "~/utils/api";
 
@@ -12,10 +12,10 @@ import BoardsLoading from "~/components/dashboard/boardsLoading";
 import NewTask from "~/components/dashboard/newTask";
 import LoadingOneBoard from "~/components/dashboard/loadingOneBoard";
 import NoBoardSelected from "~/components/dashboard/noBoardSelected";
-
+import NewSubTask from "~/components/dashboard/newSubtask";
+import SubTaskView from "~/components/dashboard/subtaskView";
 const Home: NextPage = () => {
   const [boardId, setBoardId] = useState("");
-  const newTaskButtonRef = useRef<HTMLButtonElement>(null);
 
   // const hello = api.dashboard.hello.useQuery({ text: "from tRPC" });
   // getting boards
@@ -37,16 +37,6 @@ const Home: NextPage = () => {
     setBoardId(boardId);
     // getOneBoard({ boardId: boardId });
   };
-  const handleNewTaskClick = () => {
-    // Trigger click event on the child button
-    if (newTaskButtonRef.current) {
-      newTaskButtonRef.current.click();
-    }
-  };
-  if (isSuccessOneBoard) {
-    console.log(oneBoardData);
-  }
-  console.log("boards", boardId);
   return (
     <>
       <Head>
@@ -62,13 +52,16 @@ const Home: NextPage = () => {
           <div className="flex h-[41.2rem] w-full flex-col bg-white text-gray-400 antialiased">
             <DarkMode />
             <h2 className="p-5 text-sm font-semibold tracking-widest">
-              ALL BOARDS (4)
+              ALL BOARDS ({boardData?.boardsCount})
             </h2>
             <div className="relative space-y-1 overflow-y-auto  pr-6">
               <NewBoard />
               {boardData ? (
-                boardData?.map((board) => (
-                  <div onClick={() => handleBoardClick(board.id)}>
+                boardData.boards?.map((board) => (
+                  <div
+                    key={board.id}
+                    onClick={() => handleBoardClick(board.id)}
+                  >
                     <Boards
                       title={board.title}
                       currentBoardId={boardId}
@@ -83,6 +76,7 @@ const Home: NextPage = () => {
             </div>
           </div>
         </div>
+
         {oneBoardData ? (
           <div className="flex grow flex-col overflow-y-auto">
             <div className="flex h-[96px] items-center justify-between border-b bg-white">
@@ -90,7 +84,9 @@ const Home: NextPage = () => {
                 {oneBoardData.title}
               </h1>
               <div className="flex space-x-4 pr-10">
-                <NewTask boardId={boardId} buttonRef={newTaskButtonRef} />
+                <NewSubTask
+                  task={oneBoardData.tasks as any}
+                />
                 <div className="group flex items-center justify-center rounded-3xl duration-300 hover:bg-gray-300">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -121,14 +117,15 @@ const Home: NextPage = () => {
                   {task.subTasks.map((subTask) => (
                     <div
                       key={subTask.id}
-                      className="flex h-[121px] items-center justify-center rounded-lg bg-white shadow-lg duration-500 hover:opacity-90 hover:shadow-sm"
+                      className="relative flex h-[121px] items-center justify-center rounded-lg bg-white shadow-lg duration-500 hover:opacity-90 hover:shadow-sm"
                     >
+                      <SubTaskView subTaskId={subTask.id} />
                       <div className="px-4">
                         <h4 className="mb-1 font-semibold">{subTask.title}</h4>
                         <p className="text-sm font-semibold text-gray-400">
                           {`${
                             subTask.subtasks.filter(
-                              (task: any) => task.finished
+                              (task) => task.finished
                             ).length
                           } of ${subTask.subtasks.length} subtasks`}
                         </p>
@@ -137,73 +134,8 @@ const Home: NextPage = () => {
                   ))}
                 </div>
               ))}
-              <div className="my-4 ml-16 h-[580px] w-[280px] space-y-6 overflow-y-auto rounded-lg">
-                <div className="flex items-center space-x-2 pt-8">
-                  <div className="h-5 w-5 rounded-full bg-lime-400"></div>
-                  <p className="text-sm font-semibold tracking-widest text-gray-400">
-                    Todo
-                  </p>
-                </div>
-                <div className="flex h-[121px] items-center justify-center rounded-lg bg-white shadow-lg duration-500 hover:opacity-90 hover:shadow-sm">
-                  <div className="px-4">
-                    <h4 className="mb-1 font-semibold">
-                      Write launch article to publish on multiple channels
-                    </h4>
-                    <p className="text-sm font-semibold text-gray-400">
-                      0 of 4 subtasks
-                    </p>
-                  </div>
-                </div>
-                <div className="flex h-[121px] items-center justify-center rounded-lg bg-white shadow-lg duration-500 hover:opacity-90 hover:shadow-sm">
-                  <div className="px-4">
-                    <h4 className="mb-1 font-semibold">
-                      Write launch article to publish on multiple channels
-                    </h4>
-                    <p className="text-sm font-semibold text-gray-400">
-                      0 of 4 subtasks
-                    </p>
-                  </div>
-                </div>
-                <div className="flex h-[121px] items-center justify-center rounded-lg bg-white shadow-lg duration-500 hover:opacity-90 hover:shadow-sm">
-                  <div className="px-4">
-                    <h4 className="mb-1 font-semibold">
-                      Write launch article to publish on multiple channels
-                    </h4>
-                    <p className="text-sm font-semibold text-gray-400">
-                      0 of 4 subtasks
-                    </p>
-                  </div>
-                </div>
-                <div className="flex h-[121px] items-center justify-center rounded-lg bg-white shadow-lg duration-500 hover:opacity-90 hover:shadow-sm">
-                  <div className="px-4">
-                    <h4 className="mb-1 font-semibold">
-                      Write launch article to publish on multiple channels
-                    </h4>
-                    <p className="text-sm font-semibold text-gray-400">
-                      0 of 4 subtasks
-                    </p>
-                  </div>
-                </div>
-                <div className="flex h-[121px] items-center justify-center rounded-lg bg-white shadow-lg duration-500 hover:opacity-90 hover:shadow-sm">
-                  <div className="px-4">
-                    <h4 className="mb-1 font-semibold">
-                      Write launch article to publish on multiple channels
-                    </h4>
-                    <p className="text-sm font-semibold text-gray-400">
-                      0 of 4 subtasks
-                    </p>
-                  </div>
-                </div>
-              </div>
 
-              <div
-                onClick={handleNewTaskClick}
-                className="group my-12 ml-16 flex h-[550px] w-[280px] cursor-pointer items-center justify-center rounded-lg bg-gradient-to-b from-gray-300 to-white"
-              >
-                <h2 className="text-2xl font-bold text-gray-400 duration-300 group-hover:text-indigo-600">
-                  + New Column
-                </h2>
-              </div>
+              <NewTask boardId={boardId} />
             </div>
           </div>
         ) : isLoadingOneBoard ? (

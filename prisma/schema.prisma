@@ -63,10 +63,10 @@ model Board {
 }
 
 model Task {
-    id          String  @id @default(auto()) @map("_id") @db.ObjectId
-    title       String  @unique
-    boardId     String  @db.ObjectId
-    color       String  @default("#63fcb4")
+    id      String @id @default(auto()) @map("_id") @db.ObjectId
+    title   String
+    boardId String @db.ObjectId
+    color   String @default("#63fcb4")
 
     createdAt DateTime  @default(now())
     updatedAt DateTime  @updatedAt
@@ -75,14 +75,25 @@ model Task {
 }
 
 model SubTask {
-    id       String @id @default(auto()) @map("_id") @db.ObjectId
-    title    String
-    finished Boolean @default(false)
+    id          String   @id @default(auto()) @map("_id") @db.ObjectId
+    title       String
+    finished    Boolean  @default(false)
     description String?
-    subtasks String[]
+    subtasks    Points[]
 
     taskId    String   @db.ObjectId
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
     task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+}
+
+model Points {
+    id        String  @id @default(auto()) @map("_id") @db.ObjectId
+    title     String
+    finished  Boolean @default(false)
+    subTaskId String  @db.ObjectId
+
+    task      SubTask  @relation(fields: [subTaskId], references: [id], onDelete: Cascade)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
