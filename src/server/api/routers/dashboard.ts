@@ -128,8 +128,8 @@ export const dashboardRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const subTasks = [] as any;
-      input.subTasks.map(async (subtask) => {
+      const subTasks = [] as { title: string; finished: boolean }[];
+      input.subTasks.map((subtask) => {
         subTasks.push(subtask);
       });
       const task = await ctx.prisma.subTask.create({
@@ -162,7 +162,7 @@ export const dashboardRouter = createTRPCRouter({
         ),
       })
     )
-    .mutation(async ({ ctx, input }) => {
+    .mutation(({ ctx, input }) => {
       input.subTasks.map(async (subtask) => {
         await ctx.prisma.points.create({
           data: {

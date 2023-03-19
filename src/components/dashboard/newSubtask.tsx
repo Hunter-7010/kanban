@@ -87,7 +87,7 @@ export default function NewSubTask({ task }: Props) {
 
   //trpc create task
   const { mutate } = api.dashboard.newSubTask.useMutation({
-    onSuccess: (data) => {
+    onSuccess: async () => {
       toast.success("task Created!", {
         position: "top-right",
         autoClose: 2000,
@@ -98,7 +98,7 @@ export default function NewSubTask({ task }: Props) {
         progress: undefined,
         theme: "light",
       });
-      ctx.dashboard.getOneBoard.invalidate();
+      await ctx.dashboard.getOneBoard.invalidate();
       setIsOpen(false);
       reset();
     },
@@ -121,8 +121,8 @@ export default function NewSubTask({ task }: Props) {
   const onOptionClickHandler = (subtask: string, id: string) => {
     setValue("titleId", id);
   };
-
-  const formSubmitHandler: SubmitHandler<taskFormSchemaType> = async (data) => {
+  //eslint-disable-next-line
+  const formSubmitHandler: SubmitHandler<taskFormSchemaType> = (data) => {
     mutate(data);
   };
   const [parent] = useAutoAnimate();
@@ -199,7 +199,7 @@ export default function NewSubTask({ task }: Props) {
                         onOptionClick={onOptionClickHandler}
                       />
                       {errors.titleId && (
-                        <p className="text-sm text-red-600 mt-1">
+                        <p className="mt-1 text-sm text-red-600">
                           {errors.titleId.message}
                         </p>
                       )}

@@ -74,7 +74,7 @@ export default function NewTask({ boardId }: Props) {
 
   //trpc create task
   const { mutate } = api.dashboard.newTask.useMutation({
-    onSuccess: (data) => {
+    onSuccess: async () => {
       toast.success("task Created!", {
         position: "top-right",
         autoClose: 2000,
@@ -85,7 +85,7 @@ export default function NewTask({ boardId }: Props) {
         progress: undefined,
         theme: "light",
       });
-      ctx.dashboard.getOneBoard.invalidate();
+      await ctx.dashboard.getOneBoard.invalidate();
       setIsOpen(false);
       reset();
     },
@@ -105,8 +105,8 @@ export default function NewTask({ boardId }: Props) {
       );
     },
   });
-
-  const formSubmitHandler: SubmitHandler<taskFormSchemaType> = async (data) => {
+  // eslint-disable-next-line
+  const formSubmitHandler: SubmitHandler<taskFormSchemaType> = (data) => {
     mutate(data);
   };
   const [parent] = useAutoAnimate();

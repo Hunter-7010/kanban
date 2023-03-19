@@ -85,7 +85,18 @@ const Home: NextPage = () => {
               </h1>
               <div className="flex space-x-4 pr-10">
                 <NewSubTask
-                  task={oneBoardData.tasks as any}
+                  task={
+                    oneBoardData.tasks as {
+                      id: string;
+                      title: string;
+                      boardId: string;
+                      color: string;
+
+                      createdAt: Date;
+                      updatedAt: Date;
+                      subTasks: [];
+                    }[]
+                  }
                 />
                 <div className="group flex items-center justify-center rounded-3xl duration-300 hover:bg-gray-300">
                   <svg
@@ -119,14 +130,13 @@ const Home: NextPage = () => {
                       key={subTask.id}
                       className="relative flex h-[121px] items-center justify-center rounded-lg bg-white shadow-lg duration-500 hover:opacity-90 hover:shadow-sm"
                     >
-                      <SubTaskView subTaskId={subTask.id} />
+                      <SubTaskView subTaskId={subTask.id} subtasks={subTask} />
                       <div className="px-4">
                         <h4 className="mb-1 font-semibold">{subTask.title}</h4>
                         <p className="text-sm font-semibold text-gray-400">
                           {`${
-                            subTask.subtasks.filter(
-                              (task) => task.finished
-                            ).length
+                            subTask.subtasks.filter((task) => task.finished)
+                              .length
                           } of ${subTask.subtasks.length} subtasks`}
                         </p>
                       </div>

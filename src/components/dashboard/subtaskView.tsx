@@ -13,8 +13,21 @@ import DownArrow from "../svgs/downArrow";
 import SubTaskLoader from "./subTaskLoader";
 type Props = {
   subTaskId: string;
+  subtasks: {
+    title: string;
+    description: string | null;
+    createdAt: Date;
+    updatedAt: Date;
+    finished: boolean;
+    id: string;
+    taskId: string;
+    subtasks: {
+      title: string;
+      finished: boolean;
+    }[];
+  };
 };
-export default function SubTaskView({ subTaskId }: Props) {
+export default function SubTaskView({ subTaskId, subtasks }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const ctx = api.useContext();
@@ -73,16 +86,16 @@ export default function SubTaskView({ subTaskId }: Props) {
 
   //getting SubTask Data
   //getting one board
-  const {
-    data: oneSubTaskData,
-    isLoading: isLoadingOneSubTask,
-    isSuccess: isSuccessOneSubTask,
-    isError: isErrorOneSubTask,
-  } = api.dashboard.getOneSubTask.useQuery({ subTaskId });
+  // const {
+  //   data: oneSubTaskData,
+  //   isLoading: isLoadingOneSubTask,
+  //   isSuccess: isSuccessOneSubTask,
+  //   isError: isErrorOneSubTask,
+  // } = api.dashboard.getOneSubTask.useQuery({ subTaskId }, { cacheTime: 0 });
 
   //trpc create task
   const { mutate } = api.dashboard.newPoints.useMutation({
-    onSuccess: () => {
+    onSuccess: async () => {
       toast.success("SubTasks Created!", {
         position: "top-right",
         autoClose: 2000,
@@ -93,10 +106,9 @@ export default function SubTaskView({ subTaskId }: Props) {
         progress: undefined,
         theme: "light",
       });
-      ctx.dashboard.getOneSubTask.invalidate();
-      ctx.dashboard.getOneBoard.invalidate();
-      setIsOpen(false);
+      await ctx.dashboard.getOneBoard.invalidate();
       setIsFormOpen(false);
+      // setIsOpen(false);
       reset();
     },
     onError: () => {
@@ -112,8 +124,8 @@ export default function SubTaskView({ subTaskId }: Props) {
       });
     },
   });
-
-  const formSubmitHandler: SubmitHandler<taskFormSchemaType> = async (data) => {
+  //eslint-disable-next-line
+  const formSubmitHandler: SubmitHandler<taskFormSchemaType> = (data) => {
     mutate(data);
   };
   const [parent] = useAutoAnimate();
@@ -152,180 +164,178 @@ export default function SubTaskView({ subTaskId }: Props) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                {isSuccessOneSubTask ? (
-                  <Dialog.Panel className="min-h-[18rem] w-full max-w-lg transform overflow-hidden rounded-2xl bg-white py-12 px-6 text-left align-middle shadow-xl transition-all">
-                    <Dialog.Title
-                      as="h3"
-                      className="relative mb-4 flex justify-between text-lg font-medium leading-6 text-gray-900 dark:text-white"
+                {/* {isSuccessOneSubTask ? ( */}
+                <Dialog.Panel className="min-h-[18rem] w-full max-w-lg transform overflow-hidden rounded-2xl bg-white py-12 px-6 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Title
+                    as="h3"
+                    className="relative mb-4 flex justify-between text-lg font-medium leading-6 text-gray-900 dark:text-white"
+                  >
+                    <p className="mb-4">
+                      <h1 className="mb-3">{subtasks.title}</h1>
+
+                      <h2 className="block text-sm font-medium text-gray-500 dark:text-gray-400">
+                        {subtasks.description}
+                      </h2>
+                    </p>
+
+                    <a
+                      className=" absolute -right-4 -top-6 cursor-pointer items-start px-4 text-gray-500 duration-300 hover:text-gray-400 md:w-auto"
+                      type="button"
+                      onClick={closeModal}
                     >
-                      <p className="mb-4">
-                        <h1 className="mb-3">{oneSubTaskData?.title}</h1>
-
-                        <h2 className="block text-sm font-medium text-gray-500 dark:text-gray-400">
-                          {oneSubTaskData?.description}
-                        </h2>
-                      </p>
-
-                      <a
-                        className=" absolute -right-4 -top-6 cursor-pointer items-start px-4 text-gray-500 duration-300 hover:text-gray-400 md:w-auto"
-                        type="button"
-                        onClick={closeModal}
-                      >
-                        <X />
-                      </a>
-                    </Dialog.Title>
-                    <div className=" w-full space-y-2">
-                      <h3 className="text-xs font-bold text-gray-400">
-                        {`${
-                          oneSubTaskData?.subtasks.filter(
-                            (task) => task.finished
-                          ).length
-                        } of ${oneSubTaskData?.subtasks.length} subtasks`}
-                      </h3>
-                      <div className="space-y-4">
-                        {oneSubTaskData?.subtasks.map((subtask) => (
-                          <div
-                            key={subtask.id}
-                            className="mb-4 flex cursor-pointer items-center rounded-lg bg-gray-100 p-3 duration-300 hover:bg-indigo-100 "
-                          >
-                            <input
-                              type="checkbox"
-                              checked={subtask.finished}
-                              className="h-4 w-4 cursor-pointer rounded border-gray-300 bg-gray-100 text-indigo-600 focus:ring-2 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-indigo-600"
-                            />
-                            <label className="ml-2 cursor-pointer text-sm font-medium text-gray-900 dark:text-gray-300">
-                              {subtask.title}
-                            </label>
-                          </div>
-                        ))}
-                      </div>
+                      <X />
+                    </a>
+                  </Dialog.Title>
+                  <div className=" w-full space-y-2">
+                    <h3 className="text-xs font-bold text-gray-400">
+                      {`${
+                        subtasks.subtasks.filter((task) => task.finished).length
+                      } of ${subtasks.subtasks.length} subtasks`}
+                    </h3>
+                    <div className="space-y-4">
+                      {subtasks.subtasks.map((subtask, ind) => (
+                        <div
+                          key={ind}
+                          className="mb-4 flex cursor-pointer items-center rounded-lg bg-gray-100 p-3 duration-300 hover:bg-indigo-100 "
+                        >
+                          <input
+                            type="checkbox"
+                            checked={subtask.finished}
+                            className="h-4 w-4 cursor-pointer rounded border-gray-300 bg-gray-100 text-indigo-600 focus:ring-2 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-indigo-600"
+                          />
+                          <label className="ml-2 cursor-pointer text-sm font-medium text-gray-900 dark:text-gray-300">
+                            {subtask.title}
+                          </label>
+                        </div>
+                      ))}
                     </div>
-                    {/* <button
+                  </div>
+                  {/* <button
                      onClick={() => setIsFormOpen(!isFormOpen)}
                      type="button"
                      className=" mt-6 mr-2 rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                    >
                      Add New SubTasks
                    </button> */}
-                    <div ref={formParent}>
-                      {isFormOpen ? (
-                        <form
-                          //   eslint-disable-next-line
-                          onSubmit={handleSubmit(formSubmitHandler)}
-                          className=" w-full space-y-8"
-                        >
-                          <div ref={idErrorAnimationParent}>
-                            <input
-                              type="hidden"
-                              readOnly
-                              id="title"
-                              defaultValue={subTaskId}
-                              {...register("subTaskId")}
-                            />
+                  <div ref={formParent}>
+                    {isFormOpen ? (
+                      <form
+                        //   eslint-disable-next-line
+                        onSubmit={handleSubmit(formSubmitHandler)}
+                        className=" w-full space-y-8"
+                      >
+                        <div ref={idErrorAnimationParent}>
+                          <input
+                            type="hidden"
+                            readOnly
+                            id="title"
+                            defaultValue={subTaskId}
+                            {...register("subTaskId")}
+                          />
 
-                            {errors.subTaskId && (
-                              <p className="mt-1 text-sm text-red-600">
-                                {errors.subTaskId.message}
-                              </p>
-                            )}
-                          </div>
+                          {errors.subTaskId && (
+                            <p className="mt-1 text-sm text-red-600">
+                              {errors.subTaskId.message}
+                            </p>
+                          )}
+                        </div>
 
-                          <div ref={parent}>
-                            {fields.map((subTask, ind) => (
-                              <div
-                                key={subTask.id}
-                                className="flex w-full items-end"
-                              >
-                                <div className="mr-4 flex flex-col">
-                                  <a
-                                    onClick={() => moveUp(ind)}
-                                    className="cursor-pointer"
-                                  >
-                                    {" "}
-                                    <UpArrow />{" "}
-                                  </a>
-                                  <a
-                                    onClick={() => moveDown(ind)}
-                                    className="cursor-pointer"
-                                  >
-                                    {" "}
-                                    <DownArrow />{" "}
-                                  </a>
-                                </div>
-                                <div className="mr-3 w-full">
-                                  <label
-                                    htmlFor={`title${ind}`}
-                                    className="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
-                                  >
-                                    Title
-                                  </label>
-                                  <input
-                                    type="text"
-                                    id={`title${ind}`}
-                                    {...register(`subTasks.${ind}.title`)}
-                                    className={`block w-full rounded-lg border p-3 text-sm dark:shadow-sm ${
-                                      errors.subTasks &&
-                                      errors.subTasks[ind] &&
-                                      errors.subTasks[ind]?.title
-                                        ? "border-red-300 bg-red-50  text-red-900  placeholder:text-red-900 focus:border-red-500 focus:ring-red-500 dark:border-red-600 dark:bg-red-700 dark:text-white  dark:placeholder-red-400 dark:focus:border-red-500 dark:focus:ring-red-500"
-                                        : "border-gray-300 bg-gray-50  text-gray-900  focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400  dark:focus:border-indigo-500 dark:focus:ring-indigo-500"
-                                    } ${
-                                      isSubmitSuccessful
-                                        ? "border-green-300 bg-green-50  text-green-900  placeholder:text-green-900 focus:border-green-500 focus:ring-green-500 dark:border-green-600 dark:bg-green-700 dark:text-white  dark:placeholder-green-400 dark:focus:border-green-500 dark:focus:ring-green-500"
-                                        : ""
-                                    }`}
-                                    placeholder={
-                                      errors.subTasks && errors.subTasks[ind]
-                                        ? errors.subTasks[ind]?.title
-                                            ?.message ?? "SubTask Title"
-                                        : "SubTask Title"
-                                    }
-                                  />
-                                </div>
-                                <div
-                                  onClick={() => {
-                                    remove(ind);
-                                  }}
-                                  className="flex h-4 cursor-pointer items-center justify-center rounded-lg bg-red-100 py-6 px-2 text-red-700 duration-200 hover:bg-red-200 hover:text-red-800"
+                        <div ref={parent}>
+                          {fields.map((subTask, ind) => (
+                            <div
+                              key={subTask.id}
+                              className="flex w-full items-end"
+                            >
+                              <div className="mr-4 flex flex-col">
+                                <a
+                                  onClick={() => moveUp(ind)}
+                                  className="cursor-pointer"
                                 >
-                                  <X />
-                                </div>
+                                  {" "}
+                                  <UpArrow />{" "}
+                                </a>
+                                <a
+                                  onClick={() => moveDown(ind)}
+                                  className="cursor-pointer"
+                                >
+                                  {" "}
+                                  <DownArrow />{" "}
+                                </a>
                               </div>
-                            ))}
-                          </div>
-                          <button
-                            type="button"
-                            onClick={() =>
-                              append({
-                                title: "",
-                                finished: false,
-                              })
-                            }
-                            className="inline-flex w-full justify-center rounded-md border border-transparent bg-emerald-100 px-4 py-2 text-sm font-medium text-emerald-900 hover:bg-emerald-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
-                          >
-                            Add new
-                          </button>
-                          <button
-                            type="submit"
-                            className="w-full rounded-md bg-indigo-700 py-3 px-5 text-center text-sm font-medium text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
-                          >
-                            Add Task
-                          </button>
-                        </form>
-                      ) : (
+                              <div className="mr-3 w-full">
+                                <label
+                                  htmlFor={`title${ind}`}
+                                  className="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
+                                >
+                                  Title
+                                </label>
+                                <input
+                                  type="text"
+                                  id={`title${ind}`}
+                                  {...register(`subTasks.${ind}.title`)}
+                                  className={`block w-full rounded-lg border p-3 text-sm dark:shadow-sm ${
+                                    errors.subTasks &&
+                                    errors.subTasks[ind] &&
+                                    errors.subTasks[ind]?.title
+                                      ? "border-red-300 bg-red-50  text-red-900  placeholder:text-red-900 focus:border-red-500 focus:ring-red-500 dark:border-red-600 dark:bg-red-700 dark:text-white  dark:placeholder-red-400 dark:focus:border-red-500 dark:focus:ring-red-500"
+                                      : "border-gray-300 bg-gray-50  text-gray-900  focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400  dark:focus:border-indigo-500 dark:focus:ring-indigo-500"
+                                  } ${
+                                    isSubmitSuccessful
+                                      ? "border-green-300 bg-green-50  text-green-900  placeholder:text-green-900 focus:border-green-500 focus:ring-green-500 dark:border-green-600 dark:bg-green-700 dark:text-white  dark:placeholder-green-400 dark:focus:border-green-500 dark:focus:ring-green-500"
+                                      : ""
+                                  }`}
+                                  placeholder={
+                                    errors.subTasks && errors.subTasks[ind]
+                                      ? errors.subTasks[ind]?.title?.message ??
+                                        "SubTask Title"
+                                      : "SubTask Title"
+                                  }
+                                />
+                              </div>
+                              <div
+                                onClick={() => {
+                                  remove(ind);
+                                }}
+                                className="flex h-4 cursor-pointer items-center justify-center rounded-lg bg-red-100 py-6 px-2 text-red-700 duration-200 hover:bg-red-200 hover:text-red-800"
+                              >
+                                <X />
+                              </div>
+                            </div>
+                          ))}
+                        </div>
                         <button
-                          onClick={() => setIsFormOpen(!isFormOpen)}
                           type="button"
-                          className=" mt-6 mr-2 rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                          onClick={() =>
+                            append({
+                              title: "",
+                              finished: false,
+                            })
+                          }
+                          className="inline-flex w-full justify-center rounded-md border border-transparent bg-emerald-100 px-4 py-2 text-sm font-medium text-emerald-900 hover:bg-emerald-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
                         >
-                          Add New SubTasks
+                          Add new
                         </button>
-                      )}
-                    </div>
-                  </Dialog.Panel>
-                ) : (
+                        <button
+                          type="submit"
+                          className="w-full rounded-md bg-indigo-700 py-3 px-5 text-center text-sm font-medium text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
+                        >
+                          Add Task
+                        </button>
+                      </form>
+                    ) : (
+                      <button
+                        onClick={() => setIsFormOpen(!isFormOpen)}
+                        type="button"
+                        className=" mt-6 mr-2 rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                      >
+                        Add New SubTasks
+                      </button>
+                    )}
+                  </div>
+                </Dialog.Panel>
+                {/* ) : (
                   <SubTaskLoader />
-                )}
+                )} */}
               </Transition.Child>
             </div>
           </div>

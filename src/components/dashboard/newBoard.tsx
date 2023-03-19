@@ -38,7 +38,7 @@ export default function NewBoard() {
 
   //trpc create board
   const { mutate } = api.dashboard.newBoard.useMutation({
-    onSuccess: () => {
+    onSuccess: async() => {
       toast.success("Board Created!", {
         position: "top-right",
         autoClose: 2000,
@@ -49,7 +49,7 @@ export default function NewBoard() {
         progress: undefined,
         theme: "light",
       });
-      ctx.dashboard.getAllBoards.invalidate();
+      await ctx.dashboard.getAllBoards.invalidate();
       setIsOpen(false);
       setValue("title", "");
     },
@@ -69,7 +69,7 @@ export default function NewBoard() {
       );
     },
   });
-
+  //eslint-disable-next-line
   const formSubmitHandler: SubmitHandler<boardFormSchemaType> = (data) => {
     mutate(data);
   };
@@ -109,7 +109,7 @@ export default function NewBoard() {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full min-h-[18rem] max-w-lg transform overflow-hidden rounded-2xl bg-white py-12 px-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="min-h-[18rem] w-full max-w-lg transform overflow-hidden rounded-2xl bg-white py-12 px-6 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h3"
                     className="relative mb-4 flex justify-between text-lg font-medium leading-6 text-gray-900 dark:text-white"
@@ -158,22 +158,21 @@ export default function NewBoard() {
                         Title
                       </label>
                     </div>
-                    <div className="flex justify-between mt-12">
-                      <div/>
-                    <button
-                      type="submit"
-                      className="group relative inline-flex items-center overflow-hidden rounded-r-full rounded-l-full bg-indigo-600 px-8 py-3 text-white focus:outline-none focus:ring active:bg-indigo-500"
-                    >
-                      <span className="absolute left-0 -translate-x-full transition-transform group-hover:translate-x-4">
-                        <ArrowRight />
-                      </span>
+                    <div className="mt-12 flex justify-between">
+                      <div />
+                      <button
+                        type="submit"
+                        className="group relative inline-flex items-center overflow-hidden rounded-r-full rounded-l-full bg-indigo-600 px-8 py-3 text-white focus:outline-none focus:ring active:bg-indigo-500"
+                      >
+                        <span className="absolute left-0 -translate-x-full transition-transform group-hover:translate-x-4">
+                          <ArrowRight />
+                        </span>
 
-                      <span className="text-sm font-medium transition-all group-hover:ml-4">
-                        Create New Board
-                      </span>
-                    </button>
+                        <span className="text-sm font-medium transition-all group-hover:ml-4">
+                          Create New Board
+                        </span>
+                      </button>
                     </div>
-                      
                   </form>
                 </Dialog.Panel>
               </Transition.Child>
