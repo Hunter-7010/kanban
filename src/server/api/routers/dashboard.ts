@@ -33,15 +33,15 @@ export const dashboardRouter = createTRPCRouter({
             tasks: {
               include: {
                 subTasks: {
-                  orderBy: { finished: "asc" },
+                  orderBy: { createdAt: "asc" },
                   include: {
                     subtasks: {
-                      orderBy: { finished: "asc" },
+                      orderBy: { createdAt: "asc" },
                     },
                   },
                 },
               },
-              orderBy: { createdAt: "desc" },
+              orderBy: { createdAt: "asc" },
             },
           },
         });
@@ -61,7 +61,7 @@ export const dashboardRouter = createTRPCRouter({
             id: input.subTaskId,
           },
           include: {
-            subtasks: { orderBy: { finished: "asc" } },
+            subtasks: { orderBy: { createdAt: "asc" } },
           },
         });
       }
@@ -170,6 +170,21 @@ export const dashboardRouter = createTRPCRouter({
             subTaskId: input.subTaskId,
           },
         });
+      });
+    }),
+  checkingCheckbox: publicProcedure
+    .input(
+      z.object({
+        pointId: z.string().min(24),
+        checkboxState: z.boolean(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.points.update({
+        where: { id: input.pointId },
+        data: {
+          finished: !input.checkboxState,
+        },
       });
     }),
   getSecretMessage: protectedProcedure.query(() => {

@@ -22,6 +22,7 @@ type Props = {
     id: string;
     taskId: string;
     subtasks: {
+      id: string;
       title: string;
       finished: boolean;
     }[];
@@ -124,6 +125,39 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
       });
     },
   });
+    //trpc create task
+    const { mutate:checkingCheckbox } = api.dashboard.checkingCheckbox.useMutation({
+      onSuccess: async () => {
+        toast.success("SubTasks Checked!", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        await ctx.dashboard.getOneBoard.invalidate();
+        // setIsOpen(false);
+        reset();
+      },
+      onError: () => {
+        toast.error("Error, Something went wrong", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      },
+    });
+    const checkboxHandler =(pointId:string,checkboxState:boolean)=>{
+      checkingCheckbox({pointId,checkboxState})
+    }
   //eslint-disable-next-line
   const formSubmitHandler: SubmitHandler<taskFormSchemaType> = (data) => {
     mutate(data);
@@ -195,6 +229,7 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
                     <div className="space-y-4">
                       {subtasks.subtasks.map((subtask, ind) => (
                         <div
+                          onClick={()=>checkboxHandler(subtask.id,subtask.finished)}
                           key={ind}
                           className="mb-4 flex cursor-pointer items-center rounded-lg bg-gray-100 p-3 duration-300 hover:bg-indigo-100 "
                         >
