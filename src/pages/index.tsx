@@ -18,7 +18,7 @@ const Landing: NextPage = () => {
      <Head>
         <title>Kanban</title>
         <meta name="description" content="Manage your daily tasks" />
-        <link rel="icon" href="/favicon.ico" />
+       
       </Head>
     <div className="relative bg-gradient-to-b from-[#101212] to-[#08201D] text-white">
       <Navbar />

@@ -1,31 +1,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+body {
+  -webkit-tap-highlight-color: transparent;
+}
 @layer utilities {
-    .scrollbar::-webkit-scrollbar {
-      width: 10px;
-      height: 10px;
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-  
-    .scrollbar:hover::-webkit-scrollbar {
-      opacity: 1;
-    }
-  
-    .scrollbar::-webkit-scrollbar-track {
-      background-color: transparent;
-    }
-  
-    .scrollbar::-webkit-scrollbar-thumb {
-      background-color: #828FA3;
-      border: 2px solid #ACAEB3;
-      border-radius: 20px;
-    }
-  
-    .scrollbar::-webkit-scrollbar-thumb:hover {
-      background-color: #635FC7;
-    }
+  .scrollbar::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    opacity: 0;
+    transition: opacity 0.2s;
   }
-  
+
+  .scrollbar:hover::-webkit-scrollbar {
+    opacity: 1;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background-color: #828fa3;
+    border: 2px solid #acaeb3;
+    border-radius: 20px;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #635fc7;
+  }
+}

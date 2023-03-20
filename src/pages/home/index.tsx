@@ -44,9 +44,10 @@ const Home: NextPage = () => {
         <title>Dashboard</title>
         <meta name="description" content="Kanban dashboard" />
         <link rel="icon" href="/favicon.ico" />
+        <link rel="manifest" href="/site.webmanifest" />
       </Head>
-      <main className="flex h-[55rem] min-h-screen w-screen overflow-hidden bg-gradient-to-b from-[#2e026d] to-[#15162c]">
-        <div className="hidden shrink-0 grow-0 flex-col overflow-y-auto border-r bg-gray-700 lg:flex">
+      <main className="flex h-[55rem] min-h-screen w-screen overflow-hidden bg-gradient-to-b">
+        <div className="hidden shrink-0 grow-0 flex-col overflow-y-auto border-r lg:flex">
           <div className="flex h-[86.3px] items-center justify-center border-b bg-white text-4xl font-bold">
             Kanban
           </div>
