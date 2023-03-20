@@ -14,6 +14,7 @@ import LoadingOneBoard from "~/components/dashboard/loadingOneBoard";
 import NoBoardSelected from "~/components/dashboard/noBoardSelected";
 import NewSubTask from "~/components/dashboard/newSubtask";
 import SubTaskView from "~/components/dashboard/subtaskView";
+import SideBar from "~/components/dashboard/sidebar";
 const Home: NextPage = () => {
   const [boardId, setBoardId] = useState("");
 
@@ -45,7 +46,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex h-[55rem] min-h-screen w-screen overflow-hidden bg-gradient-to-b from-[#2e026d] to-[#15162c]">
-        <div className="flex shrink-0 grow-0 flex-col overflow-y-auto border-r bg-gray-700">
+        <div className="hidden shrink-0 grow-0 flex-col overflow-y-auto border-r bg-gray-700 lg:flex">
           <div className="flex h-[86.3px] items-center justify-center border-b bg-white text-4xl font-bold">
             Kanban
           </div>
@@ -76,11 +77,40 @@ const Home: NextPage = () => {
             </div>
           </div>
         </div>
+        <div className="fixed top-3.5 overflow-y-auto lg:hidden">
+          <SideBar boardCount={boardData?.boardsCount}>
+            <div className="w-full flex justify-center">
+            <DarkMode />
+
+            </div>
+            
+            <div className="relative space-y-1 overflow-y-auto  pr-6">
+              <NewBoard />
+              {boardData ? (
+                boardData.boards?.map((board) => (
+                  <div
+                    key={board.id}
+                    onClick={() => handleBoardClick(board.id)}
+                  >
+                    <Boards
+                      title={board.title}
+                      currentBoardId={boardId}
+                      boardId={board.id}
+                      key={board.id}
+                    />
+                  </div>
+                ))
+              ) : (
+                <BoardsLoading />
+              )}
+            </div>
+          </SideBar>
+        </div>
 
         {oneBoardData ? (
           <div className="flex grow flex-col overflow-y-auto">
             <div className="flex h-[96px] items-center justify-between border-b bg-white">
-              <h1 className="pl-10 text-2xl font-bold antialiased">
+              <h1 className="pl-14 text-2xl font-bold antialiased md:pl-10">
                 {oneBoardData.title}
               </h1>
               <div className="flex space-x-4 pr-10">
@@ -110,7 +140,7 @@ const Home: NextPage = () => {
                 </div>
               </div>
             </div>
-            <div className="flex h-full w-full flex-wrap overflow-y-auto bg-gray-100">
+            <div className="flex h-full w-full flex-wrap justify-center overflow-y-auto bg-gray-100 md:justify-start">
               {oneBoardData.tasks.map((task) => (
                 <div
                   key={task.id}

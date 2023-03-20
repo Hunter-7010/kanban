@@ -132,9 +132,15 @@ export default function NewSubTask({ task }: Props) {
     <>
       <button
         onClick={openModal}
-        className="flex items-center justify-center rounded-l-full rounded-r-full bg-indigo-500 py-2.5 px-6 text-white duration-300 hover:opacity-70"
+        className="hidden items-center justify-center rounded-l-full rounded-r-full bg-indigo-500 py-2.5 px-6 text-white duration-300 hover:opacity-70 md:flex"
       >
         + Add New Task
+      </button>
+      <button
+        onClick={openModal}
+        className="flex items-center justify-center rounded-full bg-indigo-500 w-10 h-10 text-white duration-300 hover:opacity-70 md:hidden"
+      >
+        +
       </button>
 
       <Transition appear show={isOpen} as={Fragment}>
