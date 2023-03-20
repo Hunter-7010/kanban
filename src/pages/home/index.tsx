@@ -144,7 +144,7 @@ const Home: NextPage = () => {
               {oneBoardData.tasks.map((task) => (
                 <div
                   key={task.id}
-                  className="my-4 ml-16 h-[580px] w-[280px] space-y-6 overflow-y-auto rounded-lg"
+                  className="md:my-4 md:ml-16 h-[580px] w-[280px] space-y-6 overflow-y-auto rounded-lg"
                 >
                   <div className="flex items-center space-x-2 pt-8">
                     <div

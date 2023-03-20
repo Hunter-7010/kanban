@@ -115,7 +115,7 @@ export default function NewTask({ boardId }: Props) {
     <>
       <div
         onClick={openModal}
-        className="group my-12 ml-16 flex h-[550px] w-[280px] cursor-pointer items-center justify-center rounded-lg bg-gradient-to-b from-gray-300 to-white"
+        className="group md:my-12 md:ml-16 flex h-[550px] w-[280px] cursor-pointer items-center justify-center rounded-lg bg-gradient-to-b from-gray-300 to-white"
       >
         <h2 className="text-2xl font-bold text-gray-400 duration-300 group-hover:text-indigo-600">
           + New Column
