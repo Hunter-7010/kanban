@@ -15,6 +15,7 @@ import NoBoardSelected from "~/components/dashboard/noBoardSelected";
 import NewSubTask from "~/components/dashboard/newSubtask";
 import SubTaskView from "~/components/dashboard/subtaskView";
 import SideBar from "~/components/dashboard/sidebar";
+import BoardOptionsDropdown from "~/components/dashboard/boardOptionsDropdown";
 const Home: NextPage = () => {
   const [boardId, setBoardId] = useState("");
 
@@ -129,15 +130,8 @@ const Home: NextPage = () => {
                     }[]
                   }
                 />
-                <div className="group flex items-center justify-center rounded-3xl duration-300 hover:bg-gray-300">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 32.055 32.055"
-                    fill="current"
-                    className="h-6 w-6 rotate-90 cursor-pointer p-1 duration-300 group-hover:fill-gray-600"
-                  >
-                    <path d="M3.968 12.061A3.965 3.965 0 000 16.027a3.965 3.965 0 003.968 3.967 3.966 3.966 0 100-7.933zm12.265 0a3.967 3.967 0 00-3.968 3.965c0 2.192 1.778 3.967 3.968 3.967s3.97-1.772 3.97-3.967a3.97 3.97 0 00-3.97-3.965zm11.857 0a3.967 3.967 0 10-.005 7.933 3.967 3.967 0 00.005-7.933z"></path>
-                  </svg>
+                <div className="flex items-center justify-center">
+                <BoardOptionsDropdown boardId={boardId}/>
                 </div>
               </div>
             </div>

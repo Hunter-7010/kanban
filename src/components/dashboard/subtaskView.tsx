@@ -125,8 +125,9 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
       });
     },
   });
-    //trpc create task
-    const { mutate:checkingCheckbox } = api.dashboard.checkingCheckbox.useMutation({
+  //trpc create task
+  const { mutate: checkingCheckbox } =
+    api.dashboard.checkingCheckbox.useMutation({
       onSuccess: async () => {
         toast.success("SubTasks Checked!", {
           position: "top-right",
@@ -155,9 +156,44 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
         });
       },
     });
-    const checkboxHandler =(pointId:string,checkboxState:boolean)=>{
-      checkingCheckbox({pointId,checkboxState})
-    }
+    //delete one Point
+    const { mutate: deleteOnePoint } =
+    api.dashboard.deleteOnePoint.useMutation({
+      onSuccess: async () => {
+        toast.success("Subtask deleted!", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        await ctx.dashboard.invalidate();
+        // setIsOpen(false);
+        reset();
+      },
+      onError: () => {
+        toast.error("Error, Something went wrong", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      },
+    });
+  const checkboxHandler = (pointId: string, checkboxState: boolean) => {
+    checkingCheckbox({ pointId, checkboxState });
+  };
+
+  const deleteHandler = (pointId: string)=>{
+    deleteOnePoint({ pointId });
+  }
   //eslint-disable-next-line
   const formSubmitHandler: SubmitHandler<taskFormSchemaType> = (data) => {
     mutate(data);
@@ -229,18 +265,25 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
                     <div className="space-y-4">
                       {subtasks.subtasks.map((subtask, ind) => (
                         <div
-                          onClick={()=>checkboxHandler(subtask.id,subtask.finished)}
                           key={ind}
-                          className="mb-4 flex cursor-pointer items-center rounded-lg bg-gray-100 p-3 duration-300 hover:bg-indigo-100 "
+                          className="mb-4 flex cursor-pointer items-center justify-between rounded-lg bg-gray-100 p-3 duration-300 hover:bg-indigo-100 "
                         >
-                          <input
-                            type="checkbox"
-                            checked={subtask.finished}
-                            className="h-4 w-4 cursor-pointer rounded border-gray-300 bg-gray-100 text-indigo-600 focus:ring-2 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-indigo-600"
-                          />
-                          <label className="ml-2 cursor-pointer text-sm font-medium text-gray-900 dark:text-gray-300">
-                            {subtask.title}
-                          </label>
+                          <div
+                            className="h-full w-full"
+                            onClick={() =>
+                              checkboxHandler(subtask.id, subtask.finished)
+                            }
+                          >
+                            <input
+                              type="checkbox"
+                              checked={subtask.finished}
+                              className="h-4 w-4 cursor-pointer rounded border-gray-300 bg-gray-100 text-indigo-600 focus:ring-2 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-indigo-600"
+                            />
+                            <label className="ml-2 cursor-pointer text-sm font-medium text-gray-900 dark:text-gray-300">
+                              {subtask.title}
+                            </label>
+                          </div>
+                          <div onClick={()=>deleteHandler(subtask.id)} className="z-10 hover:bg-red-100 duration-500 border-red-900 border rounded-xl scale-75 text-red-700"><X/></div>
                         </div>
                       ))}
                     </div>

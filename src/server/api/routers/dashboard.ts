@@ -187,6 +187,32 @@ export const dashboardRouter = createTRPCRouter({
         },
       });
     }),
+  deleteOneBoard: publicProcedure
+    .input(
+      z.object({
+        boardId: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.board.delete({
+        where: {
+          id: input.boardId,
+        },
+      });
+    }),
+    deleteOnePoint: publicProcedure
+    .input(
+      z.object({
+        pointId: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.points.delete({
+        where: {
+          id: input.pointId,
+        },
+      });
+    }),
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";
   }),
