@@ -47,12 +47,12 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
         <link rel="manifest" href="/site.webmanifest" />
       </Head>
-      <main className="flex h-[55rem] min-h-screen w-screen overflow-hidden bg-gradient-to-b">
-        <div className="hidden shrink-0 grow-0 flex-col overflow-y-auto border-r lg:flex">
-          <div className="flex h-[86.3px] items-center justify-center border-b bg-white text-4xl font-bold">
+      <main className="flex h-[55rem] duration-500 dark:text-white min-h-screen w-screen overflow-hidden bg-gradient-to-b dark:bg-gray-900">
+        <div className="hidden shrink-0 grow-0 flex-col overflow-y-auto border-r dark:border-gray-700 lg:flex">
+          <div className="flex h-[86.3px]  items-center justify-center border-b dark:border-gray-700 text-4xl font-bold">
             Kanban
           </div>
-          <div className="flex h-[41.2rem] w-full flex-col bg-white text-gray-400 antialiased">
+          <div className="flex h-[41.2rem] w-full flex-col  text-gray-400 antialiased">
             <DarkMode />
             <h2 className="p-5 text-sm font-semibold tracking-widest">
               ALL BOARDS ({boardData?.boardsCount})
@@ -81,11 +81,10 @@ const Home: NextPage = () => {
         </div>
         <div className="fixed top-3.5 overflow-y-auto lg:hidden">
           <SideBar boardCount={boardData?.boardsCount}>
-            <div className="w-full flex justify-center">
-            <DarkMode />
-
+            <div className="flex w-full justify-center">
+              <DarkMode />
             </div>
-            
+
             <div className="relative space-y-1 overflow-y-auto  pr-6">
               <NewBoard />
               {boardData ? (
@@ -111,8 +110,8 @@ const Home: NextPage = () => {
 
         {oneBoardData ? (
           <div className="flex grow flex-col overflow-y-auto">
-            <div className="flex h-[96px] items-center justify-between border-b bg-white">
-              <h1 className="pl-14 text-2xl font-bold antialiased md:pl-10">
+            <div className="flex h-[96px] items-center justify-between border-b dark:border-gray-700">
+              <h1 className="pl-14 text-2xl text-gray-900 dark:text-white  font-bold antialiased md:pl-10">
                 {oneBoardData.title}
               </h1>
               <div className="flex space-x-4 pr-10">
@@ -131,15 +130,15 @@ const Home: NextPage = () => {
                   }
                 />
                 <div className="flex items-center justify-center">
-                <BoardOptionsDropdown boardId={boardId}/>
+                  <BoardOptionsDropdown boardId={boardId} />
                 </div>
               </div>
             </div>
-            <div className="flex h-full w-full flex-wrap justify-center overflow-y-auto bg-gray-100 md:justify-start">
+            <div className="flex h-full w-full flex-wrap justify-center overflow-y-auto md:justify-start">
               {oneBoardData.tasks.map((task) => (
                 <div
                   key={task.id}
-                  className="md:my-4 md:ml-16 h-[580px] w-[280px] space-y-6 overflow-y-auto rounded-lg"
+                  className="h-[580px] w-[280px] space-y-6 overflow-y-auto rounded-lg md:my-4 md:ml-16"
                 >
                   <div className="flex items-center space-x-2 pt-8">
                     <div
@@ -153,7 +152,7 @@ const Home: NextPage = () => {
                   {task.subTasks.map((subTask) => (
                     <div
                       key={subTask.id}
-                      className="relative flex h-[121px] items-center justify-center rounded-lg bg-white shadow-lg duration-500 hover:opacity-90 hover:shadow-sm"
+                      className="relative dark:bg-gray-700 flex h-[121px] items-center justify-center rounded-lg  shadow-lg hover:opacity-90 hover:shadow-sm"
                     >
                       <SubTaskView subTaskId={subTask.id} subtasks={subTask} />
                       <div className="px-4">

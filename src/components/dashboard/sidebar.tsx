@@ -13,7 +13,7 @@ export default function SideBar({ children,boardCount }: Props) {
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="ml-1 flex h-14 w-10 items-center justify-center rounded-md p-2 sm:ml-4"
+        className="ml-1 flex h-14 w-10 items-center justify-center dark:text-white rounded-md p-2 sm:ml-4"
       >
         {/* <!-- Menu open: "hidden", Menu closed: "block" --> */}
         <svg
@@ -53,17 +53,17 @@ export default function SideBar({ children,boardCount }: Props) {
                   leaveFrom="translate-x-0"
                   leaveTo="translate-x-full"
                 >
-                  <Dialog.Panel className="pointer-events-auto w-screen max-w-md">
-                    <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
+                  <Dialog.Panel className="pointer-events-auto dark:bg-gray-800 bg-white w-screen max-w-md">
+                    <div className="flex h-full flex-col overflow-y-scroll shadow-xl">
                       <div className="flex-1 overflow-y-auto py-6 px-4 sm:px-6">
                         <div className="flex items-start justify-between">
-                          <Dialog.Title className="text-lg font-medium text-gray-900">
+                          <Dialog.Title className="text-lg font-medium text-gray-900 dark:text-gray-50">
                           ALL BOARDS ({boardCount})
                           </Dialog.Title>
                           <div className="ml-3 flex h-7 items-center">
                             <button
                               type="button"
-                              className="-m-2 p-2 text-gray-400 hover:text-gray-500"
+                              className="-m-2 p-2 text-gray-400 dark:text-gray-50 dark:hover:text-gray-400 hover:text-gray-500"
                               onClick={() => setOpen(false)}
                             >
                               <span className="sr-only">Close panel</span>

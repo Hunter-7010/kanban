@@ -105,7 +105,7 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
       });
       await ctx.dashboard.getOneBoard.invalidate();
       setIsFormOpen(false);
@@ -121,7 +121,7 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
       });
     },
   });
@@ -137,7 +137,7 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "light",
+          theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
         });
         await ctx.dashboard.getOneBoard.invalidate();
         // setIsOpen(false);
@@ -152,7 +152,7 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "light",
+          theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
         });
       },
     });
@@ -168,7 +168,7 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "light",
+          theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
         });
         await ctx.dashboard.invalidate();
         // setIsOpen(false);
@@ -183,7 +183,7 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "light",
+          theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
         });
       },
     });
@@ -235,7 +235,7 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
                 leaveTo="opacity-0 scale-95"
               >
                 {/* {isSuccessOneSubTask ? ( */}
-                <Dialog.Panel className="min-h-[18rem] w-full max-w-lg transform overflow-hidden rounded-2xl bg-white py-12 px-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="min-h-[18rem] w-full max-w-lg dark:bg-gray-800 dark:text-white transform overflow-hidden rounded-2xl bg-white py-12 px-6 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h3"
                     className="relative mb-4 flex justify-between text-lg font-medium leading-6 text-gray-900 dark:text-white"
@@ -266,7 +266,7 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
                       {subtasks.subtasks.map((subtask, ind) => (
                         <div
                           key={ind}
-                          className="mb-4 flex cursor-pointer items-center justify-between rounded-lg bg-gray-100 p-3 duration-300 hover:bg-indigo-100 "
+                          className="mb-4 dark:bg-gray-700 flex cursor-pointer items-center justify-between rounded-lg bg-gray-100 p-3 duration-300 hover:bg-indigo-100 "
                         >
                           <div
                             className="h-full w-full"
@@ -277,13 +277,13 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
                             <input
                               type="checkbox"
                               checked={subtask.finished}
-                              className="h-4 w-4 cursor-pointer rounded border-gray-300 bg-gray-100 text-indigo-600 focus:ring-2 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-indigo-600"
+                              className="h-4 w-4 cursor-pointer rounded border-gray-300 bg-gray-100 text-indigo-600 focus:ring-2 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-800 dark:ring-offset-gray-800 dark:focus:ring-indigo-600"
                             />
-                            <label className="ml-2 cursor-pointer text-sm font-medium text-gray-900 dark:text-gray-300">
+                            <label className="ml-2 cursor-pointer text-sm font-medium text-gray-900 dark:text-gray-100">
                               {subtask.title}
                             </label>
                           </div>
-                          <div onClick={()=>deleteHandler(subtask.id)} className="z-10 hover:bg-red-100 duration-500 border-red-900 border rounded-xl scale-75 text-red-700"><X/></div>
+                          <div onClick={()=>deleteHandler(subtask.id)} className="z-10 hover:bg-red-100 duration-500 dark:text-red-500 dark:border-red-700 border-red-900 border rounded-xl scale-75 text-red-700"><X/></div>
                         </div>
                       ))}
                     </div>

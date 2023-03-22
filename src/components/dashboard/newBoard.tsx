@@ -47,7 +47,7 @@ export default function NewBoard() {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
       });
       await ctx.dashboard.getAllBoards.invalidate();
       setIsOpen(false);
@@ -64,7 +64,7 @@ export default function NewBoard() {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "light",
+          theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
         }
       );
     },
@@ -109,7 +109,7 @@ export default function NewBoard() {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="min-h-[18rem] w-full max-w-lg transform overflow-hidden rounded-2xl bg-white py-12 px-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="min-h-[18rem] dark:bg-gray-800 w-full max-w-lg transform overflow-hidden rounded-2xl bg-white py-12 px-6 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h3"
                     className="relative mb-4 flex justify-between text-lg font-medium leading-6 text-gray-900 dark:text-white"
@@ -136,7 +136,7 @@ export default function NewBoard() {
                             : ""
                         } ${
                           isSubmitSuccessful
-                            ? "border border-green-500 bg-green-50 text-green-900 placeholder-green-700 duration-300 focus:border-green-500 focus:ring-green-500  dark:border-green-400 dark:bg-green-100"
+                            ? "border border-green-500 bg-green-50 text-green-900 dark:text-green-900 placeholder-green-700 duration-300 focus:border-green-500 focus:ring-green-500  dark:border-green-400 dark:bg-green-100"
                             : ""
                         }`}
                         placeholder=" "

@@ -96,7 +96,7 @@ export default function NewSubTask({ task }: Props) {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
       });
       await ctx.dashboard.getOneBoard.invalidate();
       setIsOpen(false);
@@ -113,7 +113,7 @@ export default function NewSubTask({ task }: Props) {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "light",
+          theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
         }
       );
     },
@@ -168,7 +168,7 @@ export default function NewSubTask({ task }: Props) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="min-h-[18rem] w-full max-w-lg transform overflow-hidden rounded-2xl bg-white py-12 px-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="min-h-[18rem] w-full max-w-lg transform overflow-hidden rounded-2xl dark:bg-gray-800 bg-white py-12 px-6 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h3"
                     className="relative mb-4 flex justify-between text-lg font-medium leading-6 text-gray-900 dark:text-white"
@@ -255,7 +255,7 @@ export default function NewSubTask({ task }: Props) {
                     </div>
                     <div ref={parent}>
                       {fields.map((subTask, ind) => (
-                        <div key={subTask.id} className="flex w-full items-end">
+                        <div key={subTask.id} className="flex text-white w-full items-end">
                           <div className="mr-4 flex flex-col">
                             <a
                               onClick={() => moveUp(ind)}
