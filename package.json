@@ -29,11 +29,15 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.5",
+    "react-redux": "^8.0.5",
     "react-toastify": "^9.1.1",
+    "redux": "^4.2.1",
+    "redux-logger": "^3.0.6",
     "superjson": "1.9.1",
     "zod": "^3.20.6"
   },
   "devDependencies": {
+    "@redux-devtools/core": "^3.13.1",
     "@tailwindcss/forms": "^0.5.3",
     "@types/eslint": "^8.21.1",
     "@types/lodash.clamp": "^4.0.7",
@@ -41,6 +45,7 @@
     "@types/prettier": "^2.7.2",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
+    "@types/redux-logger": "^3.0.9",
     "@typescript-eslint/eslint-plugin": "^5.53.0",
     "@typescript-eslint/parser": "^5.53.0",
     "autoprefixer": "^10.4.7",

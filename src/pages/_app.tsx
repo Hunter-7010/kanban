@@ -1,6 +1,7 @@
 import { type AppType } from "next/app";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
+import { Provider } from "react-redux";
 
 import { api } from "~/utils/api";
 import Head from "next/head";
@@ -8,6 +9,8 @@ import Head from "next/head";
 import "~/styles/globals.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import { store } from "~/store/store";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -184,9 +187,12 @@ const MyApp: AppType<{ session: Session | null }> = ({
         />
       </Head>
       <SessionProvider session={session}>
+      <Provider store={store}>
         <Component {...pageProps} />
         <ToastContainer />
+      </Provider>
       </SessionProvider>
+
     </>
   );
 };
