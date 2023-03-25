@@ -98,8 +98,8 @@ export default function NewSubTask({ task }: Props) {
         progress: undefined,
         theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
       });
-      setTimeout(async () => {
-        await ctx.dashboard.invalidate();
+      setTimeout(() => {
+        ctx.dashboard.invalidate();
       }, 1000); 
       setIsOpen(false);
       reset();

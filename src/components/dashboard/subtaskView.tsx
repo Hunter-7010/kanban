@@ -107,8 +107,8 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
         progress: undefined,
         theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
       });
-      setTimeout(async () => {
-        await ctx.dashboard.invalidate();
+      setTimeout(() => {
+        ctx.dashboard.invalidate();
       }, 1000); 
       setIsFormOpen(false);
       // setIsOpen(false);
@@ -130,7 +130,7 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
   //trpc create task
   const { mutate: checkingCheckbox } =
     api.dashboard.checkingCheckbox.useMutation({
-      onSuccess: async () => {
+      onSuccess: () => {
         toast.success("SubTasks Checked!", {
           position: "top-right",
           autoClose: 2000,
@@ -141,7 +141,7 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
           progress: undefined,
           theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
         });
-        await ctx.dashboard.getOneBoard.invalidate();
+        ctx.dashboard.getOneBoard.invalidate();
         // setIsOpen(false);
         reset();
       },
@@ -161,7 +161,7 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
     //delete one Point
     const { mutate: deleteOnePoint } =
     api.dashboard.deleteOnePoint.useMutation({
-      onSuccess: async () => {
+      onSuccess: () => {
         toast.success("Subtask deleted!", {
           position: "top-right",
           autoClose: 2000,
@@ -172,7 +172,7 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
           progress: undefined,
           theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
         });
-        await ctx.dashboard.invalidate();
+        ctx.dashboard.invalidate();
         // setIsOpen(false);
         reset();
       },

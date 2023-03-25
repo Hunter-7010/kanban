@@ -38,7 +38,7 @@ export default function NewBoard() {
 
   //trpc create board
   const { mutate } = api.dashboard.newBoard.useMutation({
-    onSuccess: async() => {
+    onSuccess:() => {
       toast.success("Board Created!", {
         position: "top-right",
         autoClose: 2000,
@@ -49,7 +49,7 @@ export default function NewBoard() {
         progress: undefined,
         theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
       });
-      await ctx.dashboard.getAllBoards.invalidate();
+      ctx.dashboard.getAllBoards.invalidate();
       setIsOpen(false);
       setValue("title", "");
     },

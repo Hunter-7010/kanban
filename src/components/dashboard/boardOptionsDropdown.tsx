@@ -10,7 +10,7 @@ type Props = {
 export default function BoardOptionsDropdown({boardId}:Props) {
   const ctx = api.useContext();
   const {mutate:deleteBoard} = api.dashboard.deleteOneBoard.useMutation({
-    onSuccess: async () => {
+    onSuccess:() => {
       toast.success("Board Deleted!", {
         position: "top-right",
         autoClose: 2000,
@@ -21,7 +21,7 @@ export default function BoardOptionsDropdown({boardId}:Props) {
         progress: undefined,
         theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
       });
-      await ctx.dashboard.invalidate();
+      ctx.dashboard.invalidate();
     },
     onError: () => {
       toast.error(
