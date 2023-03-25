@@ -4,13 +4,13 @@ import { api } from "~/utils/api";
 import { toast } from "react-toastify";
 
 type Props = {
-  boardId: string
-}
+  boardId: string;
+};
 
-export default function BoardOptionsDropdown({boardId}:Props) {
+export default function BoardOptionsDropdown({ boardId }: Props) {
   const ctx = api.useContext();
-  const {mutate:deleteBoard} = api.dashboard.deleteOneBoard.useMutation({
-    onSuccess:() => {
+  const { mutate: deleteBoard } = api.dashboard.deleteOneBoard.useMutation({
+    onSuccess: () => {
       toast.success("Board Deleted!", {
         position: "top-right",
         autoClose: 2000,
@@ -19,38 +19,35 @@ export default function BoardOptionsDropdown({boardId}:Props) {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
+        theme: localStorage.getItem("darkMode") === "true" ? "dark" : "light",
       });
-      ctx.dashboard.invalidate();
+      return ctx.dashboard.invalidate();
     },
     onError: () => {
-      toast.error(
-        "Something went wrong",
-        {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
-        }
-      );
+      toast.error("Something went wrong", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: localStorage.getItem("darkMode") === "true" ? "dark" : "light",
+      });
     },
-  })
-  const deleteHandler = ()=>{
-    deleteBoard({boardId:boardId})
-  }
+  });
+  const deleteHandler = () => {
+    deleteBoard({ boardId: boardId });
+  };
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button className="flex justify-center  items-center rounded-xl duration-300 dark:hover:bg-gray-600 hover:bg-gray-300 py-2">
+        <Menu.Button className="flex items-center  justify-center rounded-xl py-2 duration-300 hover:bg-gray-300 dark:hover:bg-gray-600">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 32.055 32.055"
             fill="current"
-            className="h-6 w-6 rotate-90 cursor-pointer p-1 duration-300 dark:fill-white group-hover:fill-gray-600"
+            className="h-6 w-6 rotate-90 cursor-pointer p-1 duration-300 group-hover:fill-gray-600 dark:fill-white"
           >
             <path d="M3.968 12.061A3.965 3.965 0 000 16.027a3.965 3.965 0 003.968 3.967 3.966 3.966 0 100-7.933zm12.265 0a3.967 3.967 0 00-3.968 3.965c0 2.192 1.778 3.967 3.968 3.967s3.97-1.772 3.97-3.967a3.97 3.97 0 00-3.97-3.965zm11.857 0a3.967 3.967 0 10-.005 7.933 3.967 3.967 0 00.005-7.933z"></path>
           </svg>
@@ -84,17 +81,15 @@ export default function BoardOptionsDropdown({boardId}:Props) {
 
           <div className="">
             <Menu.Item>
-            
-                <a
-                  href="#"
-                  className={`block px-4 py-3 text-sm rounded-b-md 
-                   hover:bg-gray-100 hover:opacity-80  text-red-500
+              <a
+                href="#"
+                className={`block rounded-b-md px-4 py-3 text-sm 
+                   text-red-500 hover:bg-gray-100  hover:opacity-80
                   `}
-                  onClick={deleteHandler}
-                >
-                  delete
-                </a>
-           
+                onClick={deleteHandler}
+              >
+                delete
+              </a>
             </Menu.Item>
           </div>
         </Menu.Items>

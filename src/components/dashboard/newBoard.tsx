@@ -49,9 +49,9 @@ export default function NewBoard() {
         progress: undefined,
         theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
       });
-      ctx.dashboard.getAllBoards.invalidate();
       setIsOpen(false);
       setValue("title", "");
+      return ctx.dashboard.getAllBoards.invalidate();
     },
     onError: () => {
       toast.error(

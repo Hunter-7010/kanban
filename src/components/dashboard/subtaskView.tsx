@@ -105,14 +105,15 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
+        theme: localStorage.getItem("darkMode") === "true" ? "dark" : "light",
       });
-      setTimeout(() => {
-        ctx.dashboard.invalidate();
-      }, 1000); 
       setIsFormOpen(false);
       // setIsOpen(false);
       reset();
+      //eslint-disable-next-line
+      setTimeout(async () => {
+        await ctx.dashboard.invalidate();
+      }, 1000);
     },
     onError: () => {
       toast.error("Error, Something went wrong", {
@@ -123,7 +124,7 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
+        theme: localStorage.getItem("darkMode") === "true" ? "dark" : "light",
       });
     },
   });
@@ -139,11 +140,11 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
+          theme: localStorage.getItem("darkMode") === "true" ? "dark" : "light",
         });
-        ctx.dashboard.getOneBoard.invalidate();
         // setIsOpen(false);
         reset();
+        return ctx.dashboard.getOneBoard.invalidate();
       },
       onError: () => {
         toast.error("Error, Something went wrong", {
@@ -154,48 +155,47 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
+          theme: localStorage.getItem("darkMode") === "true" ? "dark" : "light",
         });
       },
     });
-    //delete one Point
-    const { mutate: deleteOnePoint } =
-    api.dashboard.deleteOnePoint.useMutation({
-      onSuccess: () => {
-        toast.success("Subtask deleted!", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
-        });
-        ctx.dashboard.invalidate();
-        // setIsOpen(false);
-        reset();
-      },
-      onError: () => {
-        toast.error("Error, Something went wrong", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
-        });
-      },
-    });
+  //delete one Point
+  const { mutate: deleteOnePoint } = api.dashboard.deleteOnePoint.useMutation({
+    onSuccess: () => {
+      toast.success("Subtask deleted!", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: localStorage.getItem("darkMode") === "true" ? "dark" : "light",
+      });
+      // setIsOpen(false);
+      reset();
+      return ctx.dashboard.invalidate();
+    },
+    onError: () => {
+      toast.error("Error, Something went wrong", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: localStorage.getItem("darkMode") === "true" ? "dark" : "light",
+      });
+    },
+  });
   const checkboxHandler = (pointId: string, checkboxState: boolean) => {
     checkingCheckbox({ pointId, checkboxState });
   };
 
-  const deleteHandler = (pointId: string)=>{
+  const deleteHandler = (pointId: string) => {
     deleteOnePoint({ pointId });
-  }
+  };
   //eslint-disable-next-line
   const formSubmitHandler: SubmitHandler<taskFormSchemaType> = (data) => {
     mutate(data);
@@ -237,7 +237,7 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
                 leaveTo="opacity-0 scale-95"
               >
                 {/* {isSuccessOneSubTask ? ( */}
-                <Dialog.Panel className="min-h-[18rem] w-full max-w-lg dark:bg-gray-800 dark:text-white transform overflow-hidden rounded-2xl bg-white py-12 px-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="min-h-[18rem] w-full max-w-lg transform overflow-hidden rounded-2xl bg-white py-12 px-6 text-left align-middle shadow-xl transition-all dark:bg-gray-800 dark:text-white">
                   <Dialog.Title
                     as="h3"
                     className="relative mb-4 flex justify-between text-lg font-medium leading-6 text-gray-900 dark:text-white"
@@ -268,7 +268,7 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
                       {subtasks.subtasks.map((subtask, ind) => (
                         <div
                           key={ind}
-                          className="mb-4 dark:bg-gray-700 flex cursor-pointer items-center justify-between rounded-lg bg-gray-100 p-3 duration-300 hover:bg-indigo-100 "
+                          className="mb-4 flex cursor-pointer items-center justify-between rounded-lg bg-gray-100 p-3 duration-300 hover:bg-indigo-100 dark:bg-gray-700 "
                         >
                           <div
                             className="h-full w-full"
@@ -285,7 +285,12 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
                               {subtask.title}
                             </label>
                           </div>
-                          <div onClick={()=>deleteHandler(subtask.id)} className="z-10 hover:bg-red-100 duration-500 dark:text-red-500 dark:border-red-700 border-red-900 border rounded-xl scale-75 text-red-700"><X/></div>
+                          <div
+                            onClick={() => deleteHandler(subtask.id)}
+                            className="z-10 scale-75 rounded-xl border border-red-900 text-red-700 duration-500 hover:bg-red-100 dark:border-red-700 dark:text-red-500"
+                          >
+                            <X />
+                          </div>
                         </div>
                       ))}
                     </div>

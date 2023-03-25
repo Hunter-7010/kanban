@@ -96,13 +96,14 @@ export default function NewSubTask({ task }: Props) {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
+        theme: localStorage.getItem("darkMode") === "true" ? "dark" : "light",
       });
-      setTimeout(() => {
-        ctx.dashboard.invalidate();
-      }, 1000); 
       setIsOpen(false);
       reset();
+      //eslint-disable-next-line
+      setTimeout(async () => {
+        await ctx.dashboard.invalidate();
+      }, 1000);
     },
     onError: () => {
       toast.error(
@@ -115,7 +116,7 @@ export default function NewSubTask({ task }: Props) {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
+          theme: localStorage.getItem("darkMode") === "true" ? "dark" : "light",
         }
       );
     },
@@ -140,7 +141,7 @@ export default function NewSubTask({ task }: Props) {
       </button>
       <button
         onClick={openModal}
-        className="flex items-center justify-center rounded-full bg-indigo-500 w-10 h-10 text-white duration-300 hover:opacity-70 md:hidden"
+        className="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-500 text-white duration-300 hover:opacity-70 md:hidden"
       >
         +
       </button>
@@ -170,7 +171,7 @@ export default function NewSubTask({ task }: Props) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="min-h-[18rem] w-full max-w-lg transform overflow-hidden rounded-2xl dark:bg-gray-800 bg-white py-12 px-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="min-h-[18rem] w-full max-w-lg transform overflow-hidden rounded-2xl bg-white py-12 px-6 text-left align-middle shadow-xl transition-all dark:bg-gray-800">
                   <Dialog.Title
                     as="h3"
                     className="relative mb-4 flex justify-between text-lg font-medium leading-6 text-gray-900 dark:text-white"
@@ -257,7 +258,10 @@ export default function NewSubTask({ task }: Props) {
                     </div>
                     <div ref={parent}>
                       {fields.map((subTask, ind) => (
-                        <div key={subTask.id} className="flex text-white w-full items-end">
+                        <div
+                          key={subTask.id}
+                          className="flex w-full items-end text-white"
+                        >
                           <div className="mr-4 flex flex-col">
                             <a
                               onClick={() => moveUp(ind)}

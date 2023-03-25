@@ -74,7 +74,7 @@ export default function NewTask({ boardId }: Props) {
 
   //trpc create task
   const { mutate } = api.dashboard.newTask.useMutation({
-    onSuccess:() => {
+    onSuccess: () => {
       toast.success("task Created!", {
         position: "top-right",
         autoClose: 2000,
@@ -83,13 +83,14 @@ export default function NewTask({ boardId }: Props) {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
+        theme: localStorage.getItem("darkMode") === "true" ? "dark" : "light",
       });
-      setTimeout(() => {
-        ctx.dashboard.invalidate();
-      }, 1000);
       setIsOpen(false);
       reset();
+      //eslint-disable-next-line
+      setTimeout(async () => {
+        await ctx.dashboard.invalidate();
+      }, 1000);
     },
     onError: () => {
       toast.error(
@@ -102,7 +103,7 @@ export default function NewTask({ boardId }: Props) {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
+          theme: localStorage.getItem("darkMode") === "true" ? "dark" : "light",
         }
       );
     },
@@ -117,9 +118,9 @@ export default function NewTask({ boardId }: Props) {
     <>
       <div
         onClick={openModal}
-        className="group md:my-12 dark:from-gray-700 md:ml-16 flex h-[550px] w-[280px] cursor-pointer items-center justify-center rounded-lg bg-gradient-to-b from-gray-300 to-white"
+        className="group flex h-[550px] w-[280px] cursor-pointer items-center justify-center rounded-lg bg-gradient-to-b from-gray-300 to-white dark:from-gray-700 md:my-12 md:ml-16"
       >
-        <h2 className="text-2xl font-bold dark:text-white text-gray-400 duration-300 group-hover:text-indigo-600">
+        <h2 className="text-2xl font-bold text-gray-400 duration-300 group-hover:text-indigo-600 dark:text-white">
           + New Column
         </h2>
       </div>
@@ -149,7 +150,7 @@ export default function NewTask({ boardId }: Props) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="min-h-[18rem] w-full max-w-lg transform overflow-hidden rounded-2xl dark:bg-gray-800 dark:text-white bg-white py-12 px-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="min-h-[18rem] w-full max-w-lg transform overflow-hidden rounded-2xl bg-white py-12 px-6 text-left align-middle shadow-xl transition-all dark:bg-gray-800 dark:text-white">
                   <Dialog.Title
                     as="h3"
                     className="relative mb-4 flex justify-between text-lg font-medium leading-6 text-gray-900 dark:text-white"
