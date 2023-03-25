@@ -42,7 +42,7 @@ const Home: NextPage = () => {
     isError: isErrorOneBoard,
   } = api.dashboard.getOneBoard.useQuery(
     { boardId },
-    { cacheTime: 0, staleTime: 0 }
+    { cacheTime: 0, staleTime: 0, }
   );
 
   //redux

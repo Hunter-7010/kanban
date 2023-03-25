@@ -107,7 +107,10 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
         progress: undefined,
         theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
       });
-      await ctx.dashboard.getOneBoard.invalidate();
+      // await ctx.dashboard.getOneBoard.invalidate();
+      setTimeout(async () => {
+        await ctx.dashboard.invalidate();
+      }, 1000); 
       setIsFormOpen(false);
       // setIsOpen(false);
       reset();
