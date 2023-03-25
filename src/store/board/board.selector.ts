@@ -1,0 +1,1 @@
+export const selectBoard = (state:{board:{currentBoard:string}})=> state.board.currentBoard

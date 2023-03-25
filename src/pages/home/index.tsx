@@ -16,6 +16,10 @@ import NewSubTask from "~/components/dashboard/newSubtask";
 import SubTaskView from "~/components/dashboard/subtaskView";
 import SideBar from "~/components/dashboard/sidebar";
 import BoardOptionsDropdown from "~/components/dashboard/boardOptionsDropdown";
+
+import { setCurrentBoard } from "~/store/board/board.action";
+import { useDispatch } from "react-redux";
+
 const Home: NextPage = () => {
   const [boardId, setBoardId] = useState("");
 
@@ -26,15 +30,27 @@ const Home: NextPage = () => {
     isLoading,
     isError,
     isSuccess,
-  } = api.dashboard.getAllBoards.useQuery();
+  } = api.dashboard.getAllBoards.useQuery(undefined, {
+    cacheTime: 0,
+    staleTime: 0,
+  });
   //getting one board
   const {
     data: oneBoardData,
     isLoading: isLoadingOneBoard,
     isSuccess: isSuccessOneBoard,
     isError: isErrorOneBoard,
-  } = api.dashboard.getOneBoard.useQuery({ boardId });
+  } = api.dashboard.getOneBoard.useQuery(
+    { boardId },
+    { cacheTime: 0, staleTime: 0 }
+  );
 
+  //redux
+  // const dispatch = useDispatch()
+  // if(isSuccessOneBoard && oneBoardData){
+  //   dispatch(setCurrentBoard(oneBoardData))
+  // }
+  ///
   const handleBoardClick = (boardId: string) => {
     setBoardId(boardId);
     // getOneBoard({ boardId: boardId });
@@ -47,9 +63,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
         <link rel="manifest" href="/site.webmanifest" />
       </Head>
-      <main className="flex h-[55rem] duration-500 dark:text-white min-h-screen w-screen overflow-hidden bg-gradient-to-b dark:bg-gray-900">
+      <main className="flex h-[55rem] min-h-screen w-screen overflow-hidden bg-gradient-to-b duration-500 dark:bg-gray-900 dark:text-white">
         <div className="hidden shrink-0 grow-0 flex-col overflow-y-auto border-r dark:border-gray-700 lg:flex">
-          <div className="flex h-[86.3px]  items-center justify-center border-b dark:border-gray-700 text-4xl font-bold">
+          <div className="flex h-[86.3px]  items-center justify-center border-b text-4xl font-bold dark:border-gray-700">
             Kanban
           </div>
           <div className="flex h-[41.2rem] w-full flex-col  text-gray-400 antialiased">
@@ -111,7 +127,7 @@ const Home: NextPage = () => {
         {oneBoardData ? (
           <div className="flex grow flex-col overflow-y-auto">
             <div className="flex h-[96px] items-center justify-between border-b dark:border-gray-700">
-              <h1 className="pl-14 text-2xl text-gray-900 dark:text-white  font-bold antialiased md:pl-10">
+              <h1 className="pl-14 text-2xl font-bold text-gray-900  antialiased dark:text-white md:pl-10">
                 {oneBoardData.title}
               </h1>
               <div className="flex space-x-4 pr-10">
@@ -152,7 +168,7 @@ const Home: NextPage = () => {
                   {task.subTasks.map((subTask) => (
                     <div
                       key={subTask.id}
-                      className="relative dark:bg-gray-700 flex h-[121px] items-center justify-center rounded-lg  shadow-lg hover:opacity-90 hover:shadow-sm"
+                      className="relative flex h-[121px] items-center justify-center rounded-lg shadow-lg  duration-300 hover:opacity-90 hover:shadow-sm dark:bg-gray-700"
                     >
                       <SubTaskView subTaskId={subTask.id} subtasks={subTask} />
                       <div className="px-4">
