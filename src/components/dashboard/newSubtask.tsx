@@ -87,7 +87,7 @@ export default function NewSubTask({ task }: Props) {
 
   //trpc create task
   const { mutate } = api.dashboard.newSubTask.useMutation({
-    onSuccess: async () => {
+    onSuccess: () => {
       toast.success("task Created!", {
         position: "top-right",
         autoClose: 2000,
@@ -98,7 +98,6 @@ export default function NewSubTask({ task }: Props) {
         progress: undefined,
         theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
       });
-      // await ctx.dashboard.getOneBoard.invalidate();
       setTimeout(async () => {
         await ctx.dashboard.invalidate();
       }, 1000); 

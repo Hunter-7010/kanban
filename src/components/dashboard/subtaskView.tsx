@@ -96,7 +96,7 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
 
   //trpc create task
   const { mutate } = api.dashboard.newPoints.useMutation({
-    onSuccess: async () => {
+    onSuccess: () => {
       toast.success("SubTasks Created!", {
         position: "top-right",
         autoClose: 2000,
@@ -107,7 +107,6 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
         progress: undefined,
         theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
       });
-      // await ctx.dashboard.getOneBoard.invalidate();
       setTimeout(async () => {
         await ctx.dashboard.invalidate();
       }, 1000); 
