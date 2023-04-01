@@ -87,10 +87,9 @@ export default function NewTask({ boardId }: Props) {
       });
       setIsOpen(false);
       reset();
-      //eslint-disable-next-line
-      setTimeout(async () => {
-        await ctx.dashboard.invalidate();
-      }, 1000);
+ 
+        return ctx.dashboard.invalidate();
+
     },
     onError: () => {
       toast.error(

@@ -53,7 +53,7 @@ export default function SideBar({ children,boardCount }: Props) {
                   leaveFrom="translate-x-0"
                   leaveTo="translate-x-full"
                 >
-                  <Dialog.Panel className="pointer-events-auto dark:bg-gray-800 bg-white w-screen max-w-md">
+                  <Dialog.Panel className="pointer-events-auto dark:bg-gray-800 bg-white dark:text-gray-200 w-screen max-w-md">
                     <div className="flex h-full flex-col overflow-y-scroll shadow-xl">
                       <div className="flex-1 overflow-y-auto py-6 px-4 sm:px-6">
                         <div className="flex items-start justify-between">

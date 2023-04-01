@@ -31,6 +31,7 @@ export default function NewBoard() {
     register,
     handleSubmit,
     setValue,
+    reset,
     formState: { errors, isSubmitSuccessful },
   } = useForm<boardFormSchemaType>({
     resolver: zodResolver(boardFormSchema),
@@ -38,7 +39,7 @@ export default function NewBoard() {
 
   //trpc create board
   const { mutate } = api.dashboard.newBoard.useMutation({
-    onSuccess:() => {
+    onSuccess: () => {
       toast.success("Board Created!", {
         position: "top-right",
         autoClose: 2000,
@@ -47,7 +48,7 @@ export default function NewBoard() {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
+        theme: localStorage.getItem("darkMode") === "true" ? "dark" : "light",
       });
       setIsOpen(false);
       setValue("title", "");
@@ -64,14 +65,15 @@ export default function NewBoard() {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: localStorage.getItem("darkMode") === "true"?"dark":"light",
+          theme: localStorage.getItem("darkMode") === "true" ? "dark" : "light",
         }
       );
     },
   });
-  //eslint-disable-next-line
+
   const formSubmitHandler: SubmitHandler<boardFormSchemaType> = (data) => {
-    mutate(data);
+    reset();
+    return mutate(data);
   };
 
   return (
@@ -109,7 +111,7 @@ export default function NewBoard() {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="min-h-[18rem] dark:bg-gray-800 w-full max-w-lg transform overflow-hidden rounded-2xl bg-white py-12 px-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="min-h-[18rem] w-full max-w-lg transform overflow-hidden rounded-2xl bg-white py-12 px-6 text-left align-middle shadow-xl transition-all dark:bg-gray-800">
                   <Dialog.Title
                     as="h3"
                     className="relative mb-4 flex justify-between text-lg font-medium leading-6 text-gray-900 dark:text-white"
@@ -132,13 +134,9 @@ export default function NewBoard() {
                       <input
                         className={`peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent py-2.5 px-0 text-sm text-gray-900 focus:border-indigo-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-indigo-500 ${
                           errors.title
-                            ? "border border-red-500 bg-red-50 text-red-900 placeholder-red-700 duration-300 focus:border-red-500 focus:ring-red-500  dark:border-red-400 dark:bg-red-100"
+                            ? "border border-red-500 bg-red-50 text-red-900 placeholder-red-700 duration-300 focus:border-red-500 focus:ring-red-500  dark:border-red-400 dark:bg-red-300 dark:focus:border-red-500"
                             : ""
-                        } ${
-                          isSubmitSuccessful
-                            ? "border border-green-500 bg-green-50 text-green-900 dark:text-green-900 placeholder-green-700 duration-300 focus:border-green-500 focus:ring-green-500  dark:border-green-400 dark:bg-green-100"
-                            : ""
-                        }`}
+                        } `}
                         placeholder=" "
                         id="floating_email"
                         {...register("title")}

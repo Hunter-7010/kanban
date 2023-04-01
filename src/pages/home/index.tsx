@@ -17,40 +17,25 @@ import SubTaskView from "~/components/dashboard/subtaskView";
 import SideBar from "~/components/dashboard/sidebar";
 import BoardOptionsDropdown from "~/components/dashboard/boardOptionsDropdown";
 
-import { setCurrentBoard } from "~/store/board/board.action";
-import { useDispatch } from "react-redux";
 
 const Home: NextPage = () => {
   const [boardId, setBoardId] = useState("");
 
-  // const hello = api.dashboard.hello.useQuery({ text: "from tRPC" });
   // getting boards
   const {
     data: boardData,
     isLoading,
     isError,
     isSuccess,
-  } = api.dashboard.getAllBoards.useQuery(undefined, {
-    cacheTime: 0,
-    staleTime: 0,
-  });
+  } = api.dashboard.getAllBoards.useQuery();
   //getting one board
   const {
     data: oneBoardData,
     isLoading: isLoadingOneBoard,
     isSuccess: isSuccessOneBoard,
     isError: isErrorOneBoard,
-  } = api.dashboard.getOneBoard.useQuery(
-    { boardId },
-    { cacheTime: 0, staleTime: 0, }
-  );
+  } = api.dashboard.getOneBoard.useQuery({ boardId });
 
-  //redux
-  // const dispatch = useDispatch()
-  // if(isSuccessOneBoard && oneBoardData){
-  //   dispatch(setCurrentBoard(oneBoardData))
-  // }
-  ///
   const handleBoardClick = (boardId: string) => {
     setBoardId(boardId);
     // getOneBoard({ boardId: boardId });
@@ -63,7 +48,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
         <link rel="manifest" href="/site.webmanifest" />
       </Head>
-      <main className="flex h-[55rem] min-h-screen w-screen overflow-hidden bg-gradient-to-b duration-500 dark:bg-gray-900 dark:text-white">
+      <main className="flex h-[55rem] min-h-screen w-screen overflow-hidden bg-gradient-to-b bg-gray-50 duration-500 dark:bg-gray-900 dark:text-white">
         <div className="hidden shrink-0 grow-0 flex-col overflow-y-auto border-r dark:border-gray-700 lg:flex">
           <div className="flex h-[86.3px]  items-center justify-center border-b text-4xl font-bold dark:border-gray-700">
             Kanban
@@ -127,7 +112,7 @@ const Home: NextPage = () => {
         {oneBoardData ? (
           <div className="flex grow flex-col overflow-y-auto">
             <div className="flex h-[96px] items-center justify-between border-b dark:border-gray-700">
-              <h1 className="pl-14 text-2xl font-bold text-gray-900  antialiased dark:text-white md:pl-10">
+              <h1 className="pl-14 truncate w-1/2 text-2xl font-bold text-gray-900  antialiased dark:text-white md:pl-10">
                 {oneBoardData.title}
               </h1>
               <div className="flex space-x-4 pr-10">
@@ -138,7 +123,6 @@ const Home: NextPage = () => {
                       title: string;
                       boardId: string;
                       color: string;
-
                       createdAt: Date;
                       updatedAt: Date;
                       subTasks: [];
@@ -161,17 +145,17 @@ const Home: NextPage = () => {
                       className="h-5 w-5 rounded-full"
                       style={{ backgroundColor: "#" + task.color }}
                     ></div>
-                    <p className="text-sm font-semibold tracking-widest text-gray-400">
+                    <p className="text-sm truncate font-semibold tracking-widest text-gray-400">
                       {task.title}
                     </p>
                   </div>
                   {task.subTasks.map((subTask) => (
                     <div
                       key={subTask.id}
-                      className="relative flex h-[121px] items-center justify-center rounded-lg shadow-lg  duration-300 hover:opacity-90 hover:shadow-sm dark:bg-gray-700"
+                      className="relative bg-white flex min-h-[121px] items-center justify-center rounded-lg shadow-lg  duration-300 hover:opacity-90 hover:shadow-sm dark:bg-gray-700"
                     >
                       <SubTaskView subTaskId={subTask.id} subtasks={subTask} />
-                      <div className="px-4">
+                      <div className="px-4 w-full flex flex-col justify-center items-center">
                         <h4 className="mb-1 font-semibold">{subTask.title}</h4>
                         <p className="text-sm font-semibold text-gray-400">
                           {`${
