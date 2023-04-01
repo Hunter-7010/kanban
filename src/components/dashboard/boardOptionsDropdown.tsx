@@ -43,8 +43,8 @@ export default function BoardOptionsDropdown({ boardId }: Props) {
     deleteBoard({ boardId: boardId });
   };
   const signOutHandler = () => {
-    signOut();
-    router.push("/");
+    void signOut();
+    void router.push("/");
   };
   return (
     <Menu as="div" className="relative inline-block text-left">

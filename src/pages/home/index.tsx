@@ -25,7 +25,7 @@ const Home: NextPage = () => {
   const { data: sessionData } = useSession();
   useEffect(() => {
     if (!sessionData) {
-      router.push("/");
+      void router.push("/");
       toast.warning("Unauthorized!", {
         position: "top-right",
         autoClose: 5000,
@@ -37,7 +37,7 @@ const Home: NextPage = () => {
         theme: "colored",
       });
     }
-  }, []);
+  });
   // getting boards
   const {
     data: boardData,
