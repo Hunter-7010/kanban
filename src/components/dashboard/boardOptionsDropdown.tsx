@@ -2,13 +2,16 @@ import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { api } from "~/utils/api";
 import { toast } from "react-toastify";
-
+import { signOut,useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 type Props = {
   boardId: string;
 };
 
 export default function BoardOptionsDropdown({ boardId }: Props) {
   const ctx = api.useContext();
+  const { data: sessionData } = useSession();
+  const router = useRouter();
   const { mutate: deleteBoard } = api.dashboard.deleteOneBoard.useMutation({
     onSuccess: () => {
       toast.success("Board Deleted!", {
@@ -39,6 +42,10 @@ export default function BoardOptionsDropdown({ boardId }: Props) {
   const deleteHandler = () => {
     deleteBoard({ boardId: boardId });
   };
+  const signOutHandler = () => {
+    signOut();
+    router.push("/");
+  };
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -64,34 +71,76 @@ export default function BoardOptionsDropdown({ boardId }: Props) {
         leaveTo="transform opacity-0 scale-95"
       >
         <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-          <div className="">
+          <div>
             <Menu.Item>
-              {({ active }) => (
-                <a
-                  href="#"
-                  className={`block px-4 py-3 text-sm ${
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700"
-                  }`}
-                >
-                  Edit
-                </a>
-              )}
+
+                <div className="flex items-center rounded-md px-4 py-2 pointer-events-none text-sm 
+                text-gray-900  hover:opacity-80">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 dark:bg-gray-600">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="h-8 w-8"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    
+                  </div>
+                  <span className="ml-1 uppercase">{sessionData?.user.name}</span>
+                </div>
+              
             </Menu.Item>
           </div>
-
           <div className="">
             <Menu.Item>
               <a
                 href="#"
-                className={`block rounded-b-md px-4 py-3 text-sm 
-                   text-red-500 hover:bg-gray-100  hover:opacity-80
+                className={`block rounded-md px-4 py-3 text-sm 
+                text-gray-900 hover:bg-gray-100  hover:opacity-80
                   `}
-                onClick={deleteHandler}
+                onClick={signOutHandler}
               >
-                delete
+                Log out
               </a>
             </Menu.Item>
           </div>
+          {boardId != "" && (
+            <>
+              <div className="">
+                <Menu.Item>
+                  {({ active }) => (
+                    <a
+                      href="#"
+                      className={`block px-4 py-3 text-sm ${
+                        active ? "bg-gray-100 text-gray-900" : "text-gray-700"
+                      }`}
+                    >
+                      Edit
+                    </a>
+                  )}
+                </Menu.Item>
+              </div>
+
+              <div className="">
+                <Menu.Item>
+                  <a
+                    href="#"
+                    className={`block rounded-b-md px-4 py-3 text-sm 
+                   text-red-500 hover:bg-gray-100  hover:opacity-80
+                  `}
+                    onClick={deleteHandler}
+                  >
+                    delete
+                  </a>
+                </Menu.Item>
+              </div>
+            </>
+          )}
         </Menu.Items>
       </Transition>
     </Menu>

@@ -85,15 +85,6 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
     swap(index, index + 1);
   };
 
-  //getting SubTask Data
-  //getting one board
-  // const {
-  //   data: oneSubTaskData,
-  //   isLoading: isLoadingOneSubTask,
-  //   isSuccess: isSuccessOneSubTask,
-  //   isError: isErrorOneSubTask,
-  // } = api.dashboard.getOneSubTask.useQuery({ subTaskId }, { cacheTime: 0 });
-
   //trpc create task
   const { mutate } = api.dashboard.newPoints.useMutation({
     onSuccess: () => {
@@ -240,12 +231,12 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
                     as="h3"
                     className="relative mb-4 flex justify-between text-lg font-medium leading-6 text-gray-900 dark:text-white"
                   >
-                    <p className="mb-4">
-                      <h1 className="mb-3">{subtasks.title}</h1>
+                    <p className="mb-4 w-3/4">
+                      <h4 className="mb-3 overflow-auto">{subtasks.title}</h4>
 
-                      <h2 className="block text-sm font-medium text-gray-500 dark:text-gray-400">
+                      <h4 className="block overflow-auto text-sm font-medium text-gray-500 dark:text-gray-400">
                         {subtasks.description}
-                      </h2>
+                      </h4>
                     </p>
 
                     <a
@@ -256,7 +247,7 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
                       <X />
                     </a>
                   </Dialog.Title>
-                  <div className=" w-full space-y-2">
+                  <div className="w-full space-y-2">
                     <h3 className="text-xs font-bold text-gray-400">
                       {`${
                         subtasks.subtasks.filter((task) => task.finished).length

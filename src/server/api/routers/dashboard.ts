@@ -1,23 +1,23 @@
-import { Input } from "postcss";
 import { z } from "zod";
 
-import {
-  createTRPCRouter,
-  publicProcedure,
-  protectedProcedure,
-} from "~/server/api/trpc";
+import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 export const dashboardRouter = createTRPCRouter({
-  // getAll: publicProcedure.query(({ ctx }) => {
-  //   // return ctx.prisma.example.findMany();
-  // }),
-  getAllBoards: publicProcedure.query(async ({ ctx }) => {
-    const boardsCount = await ctx.prisma.board.count({});
-    const boards = await ctx.prisma.board.findMany({});
+  getAllBoards: protectedProcedure.query(async ({ ctx }) => {
+    const boardsCount = await ctx.prisma.board.count({
+      where: {
+        author: ctx.session?.user.id,
+      },
+    });
+    const boards = await ctx.prisma.board.findMany({
+      where: {
+        author: ctx.session.user.id,
+      },
+    });
     return { boards, boardsCount };
   }),
 
-  getOneBoard: publicProcedure
+  getOneBoard: protectedProcedure
     .input(
       z.object({
         boardId: z.string(),
@@ -47,27 +47,7 @@ export const dashboardRouter = createTRPCRouter({
         });
       }
     }),
-
-  getOneSubTask: publicProcedure
-    .input(
-      z.object({
-        subTaskId: z.string(),
-      })
-    )
-    .query(async ({ ctx, input }) => {
-      if (input.subTaskId != "") {
-        return await ctx.prisma.subTask.findUnique({
-          where: {
-            id: input.subTaskId,
-          },
-          include: {
-            subtasks: { orderBy: { createdAt: "asc" } },
-          },
-        });
-      }
-    }),
-
-  newBoard: publicProcedure
+  newBoard: protectedProcedure
     .input(
       z.object({
         title: z.string().min(1),
@@ -77,10 +57,11 @@ export const dashboardRouter = createTRPCRouter({
       return await ctx.prisma.board.create({
         data: {
           title: input.title,
+          author: ctx.session.user.id,
         },
       });
     }),
-  newTask: publicProcedure
+  newTask: protectedProcedure
     .input(
       z.object({
         boardId: z.string().min(24),
@@ -101,6 +82,7 @@ export const dashboardRouter = createTRPCRouter({
           title: input.title,
           boardId: input.boardId,
           color: randomColor,
+
         },
       });
       input.subTasks.map(async (subtask) => {
@@ -108,11 +90,12 @@ export const dashboardRouter = createTRPCRouter({
           data: {
             title: subtask.title,
             taskId: task.id,
+            
           },
         });
       });
     }),
-  newSubTask: publicProcedure
+  newSubTask: protectedProcedure
     .input(
       z.object({
         titleId: z.string().min(1),
@@ -150,7 +133,7 @@ export const dashboardRouter = createTRPCRouter({
       return task;
     }),
 
-  newPoints: publicProcedure
+  newPoints: protectedProcedure
     .input(
       z.object({
         subTaskId: z.string().min(24),
@@ -172,7 +155,7 @@ export const dashboardRouter = createTRPCRouter({
         });
       });
     }),
-  checkingCheckbox: publicProcedure
+  checkingCheckbox: protectedProcedure
     .input(
       z.object({
         pointId: z.string().min(24),
@@ -187,7 +170,7 @@ export const dashboardRouter = createTRPCRouter({
         },
       });
     }),
-  deleteOneBoard: publicProcedure
+  deleteOneBoard: protectedProcedure
     .input(
       z.object({
         boardId: z.string(),
@@ -200,7 +183,7 @@ export const dashboardRouter = createTRPCRouter({
         },
       });
     }),
-    deleteOnePoint: publicProcedure
+  deleteOnePoint: protectedProcedure
     .input(
       z.object({
         pointId: z.string(),

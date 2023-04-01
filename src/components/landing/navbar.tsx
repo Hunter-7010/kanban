@@ -1,9 +1,10 @@
 import { useState } from "react";
 import Link from "next/link";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-
+  const { data: sessionData } = useSession();
   return (
     <nav className="rounded border-gray-200 bg-transparent px-2 py-2.5 sm:px-4">
       <div className="container mx-auto flex flex-wrap items-center justify-between">
@@ -18,23 +19,27 @@ const Navbar = () => {
         </h1>
         <div className="sm:ml-auto md:order-last lg:flex lg:items-center lg:justify-end lg:space-x-6">
           <a
-            href="#"
-            title=""
-            className="hidden text-base text-white transition-all duration-200 hover:text-opacity-80 lg:inline-flex"
+            title="Login with google"
+            className="hidden cursor-pointer text-base text-white transition-all duration-200 hover:text-opacity-80 lg:inline-flex"
+            onClick={
+              sessionData ? () => void signOut() : () => void signIn("google")
+            }
           >
             {" "}
-            Log in{" "}
+            {sessionData ? "Log out" : "Log in"}
           </a>
-          <Link href="/home">
-            <span
-              title=""
-              className="inline-flex items-center justify-center rounded-lg bg-white/20 px-3 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-white/40 focus:bg-white/40 sm:px-5 sm:text-base"
-              role="button"
-            >
-              {" "}
-              Dashboard{" "}
-            </span>
-          </Link>
+          {sessionData && (
+            <Link href="/home">
+              <span
+                title=""
+                className="inline-flex items-center justify-center rounded-lg bg-white/20 px-3 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-white/40 focus:bg-white/40 sm:px-5 sm:text-base"
+                role="button"
+              >
+                {" "}
+                Dashboard{" "}
+              </span>
+            </Link>
+          )}
         </div>
         <button
           type="button"

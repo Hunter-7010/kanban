@@ -277,7 +277,7 @@ export default function NewTask({ boardId }: Props) {
                         </div>
                       ))}
                     </div>
-                    <button
+                    {/* <button
                       type="button"
                       onClick={() =>
                         append({
@@ -287,7 +287,7 @@ export default function NewTask({ boardId }: Props) {
                       className="inline-flex w-full justify-center rounded-md border border-transparent bg-indigo-100 px-4 py-2 text-sm font-medium text-indigo-900 hover:bg-indigo-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
                     >
                       Add new
-                    </button>
+                    </button> */}
                     <button
                       type="submit"
                       className="w-full rounded-md bg-indigo-700 py-3 px-5 text-center text-sm font-medium text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
