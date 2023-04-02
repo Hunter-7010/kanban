@@ -75,9 +75,15 @@ const Faqs = () => {
               </p>
               <p className="mt-4 text-base text-gray-400">
                 If you have any questions visit my{" "}
-                <a href="https://zakiorya.vercel.app/" className="cursor-pointer text-teal-300 transition-all duration-200 hover:text-teal-400 hover:underline focus:text-teal-400">
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href="https://zakiorya.vercel.app/"
+                  className="cursor-pointer text-teal-300 transition-all duration-200 hover:text-teal-400 hover:underline focus:text-teal-400"
+                >
                   Portfolio
-                </a> and contact me
+                </a>{" "}
+                and contact me
               </p>
             </div>
           </div>
@@ -88,6 +94,8 @@ const Faqs = () => {
             <p className="text-gray-50">
               Didn’t find the answer you are looking for?{" "}
               <a
+                target="_blank"
+                rel="noreferrer"
                 href="https://zakiorya.vercel.app/"
                 title="author portfolio page"
                 className="text-teal-300 transition-all duration-200 hover:text-teal-400 hover:underline focus:text-teal-400"

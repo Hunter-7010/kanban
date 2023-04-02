@@ -195,17 +195,20 @@ const Footer = () => {
         <hr className="mt-16 mb-10 border-teal-900 border-opacity-70" />
 
         <div className="flex flex-wrap items-center justify-between">
-        <span className="self-center whitespace-nowrap text-3xl font-semibold text-white">
-          Kanban
+          <span className="self-center whitespace-nowrap text-3xl font-semibold text-white">
+            Kanban
           </span>
 
           <ul className="flex items-center space-x-3 md:order-3">
             <li>
               <a
-                href="#"
-                title=""
+                href="https://twitter.com/ZakiOrya"
+                rel="noreferrer"
+                target="_blank"
+                title="twitter"
                 className="flex h-7 w-7 items-center justify-center rounded-full border border-gray-700 bg-transparent text-white transition-all duration-200 hover:border-teal-600 hover:bg-teal-600 focus:border-teal-600 focus:bg-teal-600"
               >
+                <span className="sr-only">Twitter</span>
                 <svg
                   className="h-4 w-4"
                   xmlns="http://www.w3.org/2000/svg"
@@ -219,10 +222,13 @@ const Footer = () => {
 
             <li>
               <a
-                href="#"
-                title=""
+                href="https://www.facebook.com/ZakiOriakhail"
+                rel="noreferrer"
+                target="_blank"
+                title="facebook"
                 className="flex h-7 w-7 items-center justify-center rounded-full border border-gray-700 bg-transparent text-white transition-all duration-200 hover:border-teal-600 hover:bg-teal-600 focus:border-teal-600 focus:bg-teal-600"
               >
+                <span className="sr-only">Facebook</span>
                 <svg
                   className="h-4 w-4"
                   xmlns="http://www.w3.org/2000/svg"
@@ -236,10 +242,13 @@ const Footer = () => {
 
             <li>
               <a
-                href="#"
-                title=""
+                href="https://www.instagram.com/zakiorya/"
+                target="_blank"
+                rel="noreferrer"
+                title="instagram"
                 className="flex h-7 w-7 items-center justify-center rounded-full border border-gray-700 bg-transparent text-white transition-all duration-200 hover:border-teal-600 hover:bg-teal-600 focus:border-teal-600 focus:bg-teal-600"
               >
+                <span className="sr-only">Instagram</span>
                 <svg
                   className="h-4 w-4"
                   xmlns="http://www.w3.org/2000/svg"
@@ -255,8 +264,10 @@ const Footer = () => {
 
             <li>
               <a
-                href="#"
-                title=""
+              href="https://github.com/Hunter-7010"
+              target="_blank"
+              rel="noreferrer"
+                title="github"
                 className="flex h-7 w-7 items-center justify-center rounded-full border border-gray-700 bg-transparent text-white transition-all duration-200 hover:border-teal-600 hover:bg-teal-600 focus:border-teal-600 focus:bg-teal-600"
               >
                 <svg
@@ -265,6 +276,7 @@ const Footer = () => {
                   viewBox="0 0 24 24"
                   fill="currentColor"
                 >
+                   <span className="sr-only">GitHub</span>
                   <path
                     fillRule="evenodd"
                     clipRule="evenodd"
