@@ -65,8 +65,8 @@ const Home: NextPage = () => {
       <Head>
         <title>Dashboard</title>
         <meta name="description" content="Kanban dashboard" />
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="manifest" href="/site.webmanifest" />
+        {/* <link rel="icon" href="/favicon.ico" />
+        <link rel="manifest" href="/site.webmanifest" /> */}
       </Head>
       <main className="flex h-[55rem] min-h-screen w-screen overflow-hidden bg-gray-50 bg-gradient-to-b duration-500 dark:bg-gray-900 dark:text-white">
         <div className="hidden shrink-0 grow-0 flex-col overflow-y-auto border-r dark:border-gray-700 lg:flex">

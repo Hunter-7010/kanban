@@ -16,7 +16,6 @@ const Landing: NextPage = () => {
   return (
     <>
      <Head>
-        <title>Kanban</title>
         <meta name="description" content="Manage your daily tasks" />
        
       </Head>

@@ -25,7 +25,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
           name="apple-mobile-web-app-status-bar-style"
           content="black-translucent"
         />
-
+<link rel="manifest" href="/site.webmanifest" />
         <meta name="viewport" content="initial-scale=1, viewport-fit=cover,user-scalable=no" />
         <link
           rel="icon"
