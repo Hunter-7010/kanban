@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { Link as Scroll } from "react-scroll";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -10,7 +11,7 @@ const Navbar = () => {
       <div className="container mx-auto flex flex-wrap items-center justify-between">
         <h1 className="flex items-center">
           <span className="self-center whitespace-nowrap text-3xl font-semibold text-white">
-          Kanban
+            Kanban
           </span>
         </h1>
         <div className="sm:ml-auto md:order-last lg:flex lg:items-center lg:justify-end lg:space-x-6">
@@ -67,56 +68,64 @@ const Navbar = () => {
         <div
           className={`${open ? "block" : "hidden"} w-full md:block md:w-auto`}
         >
-          <ul className="mt-4 flex flex-col rounded-lg border border-gray-700 bg-gradient-to-l from-[#101212] to-[#08201D] p-4 md:mt-0 md:flex-row md:space-x-8 md:border-0 md:from-transparent md:text-sm md:font-medium">
+          <ul className="mt-4 flex flex-col rounded-lg border border-gray-700 bg-gradient-to-l from-[#101212] to-[#08201D] p-4 md:mt-0 md:flex-row md:space-x-8 md:border-0 md:from-transparent md:text-sm md:font-medium lg:ml-10">
             <li>
-              <a
-                href="#"
-                className="block rounded py-2 pl-3 pr-4  text-gray-400 hover:bg-gray-700 hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-white"
+              <Scroll
+                activeClass="active"
+                spy={true}
+                smooth
+                offset={-70}
+                duration={500}
+                to="feature"
+                className="block cursor-pointer rounded py-2 pl-3  pr-4 text-gray-400 hover:bg-gray-700 hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-white"
                 aria-current="page"
               >
-                Intro
-              </a>
-            </li>
-            <li>
-              <a
-                href="#about"
-                className="block rounded py-2 pl-3 pr-4  text-gray-400 hover:bg-gray-700 hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-white"
-              >
-                About
-              </a>
+                Feature
+              </Scroll>
             </li>
 
             <li>
-              <a
-                href="#experience"
-                className="block rounded py-2 pl-3 pr-4  text-gray-400 hover:bg-gray-700 hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-white"
+              <Scroll
+                activeClass="active"
+                spy={true}
+                smooth
+                offset={-70}
+                duration={500}
+                to="perks"
+                className="block cursor-pointer rounded py-2 pl-3  pr-4 text-gray-400 hover:bg-gray-700 hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-white"
+                aria-current="page"
               >
-                Journey
-              </a>
+                Perks
+              </Scroll>
             </li>
             <li>
-              <a
-                href="#skills"
-                className="block rounded py-2 pl-3 pr-4  text-gray-400 hover:bg-gray-700 hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-white"
+              <Scroll
+                activeClass="active"
+                spy={true}
+                smooth
+                offset={-70}
+                duration={500}
+                to="faqs"
+                className="block cursor-pointer rounded py-2 pl-3  pr-4 text-gray-400 hover:bg-gray-700 hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-white"
+                aria-current="page"
               >
-                Skills
-              </a>
+                Faqs
+              </Scroll>
             </li>
+
             <li>
-              <a
-                href="#projects"
-                className="block rounded py-2 pl-3 pr-4  text-gray-400 hover:bg-gray-700 hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-white"
-              >
-                Projects
-              </a>
-            </li>
-            <li>
-              <a
-                href="#contact"
-                className="block rounded py-2 pl-3 pr-4  text-gray-400 hover:bg-gray-700 hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-white"
+              <Scroll
+                activeClass="active"
+                spy={true}
+                smooth
+                offset={-70}
+                duration={500}
+                to="contact"
+                className="block cursor-pointer rounded py-2 pl-3  pr-4 text-gray-400 hover:bg-gray-700 hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-white"
+                aria-current="page"
               >
                 Contact
-              </a>
+              </Scroll>
             </li>
           </ul>
         </div>

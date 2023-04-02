@@ -1,6 +1,6 @@
 const Feature = () => {
   return (
-    <section className="py-10 sm:py-16 lg:py-24">
+    <section id="feature" className="py-10 sm:py-16 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* <div className="mx-auto max-w-xl text-center">
           <p className="text-sm font-semibold uppercase tracking-widest text-teal-400">
