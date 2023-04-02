@@ -1,6 +1,9 @@
 const Footer = () => {
   return (
-    <footer id="contact" className="border-t border-teal-700 py-10 sm:pt-16 lg:pt-24">
+    <footer
+      id="contact"
+      className="border-t border-teal-700 py-10 sm:pt-16 lg:pt-24"
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 gap-x-5 gap-y-12 md:grid-cols-4 md:gap-x-12">
           <div>
@@ -248,7 +251,7 @@ const Footer = () => {
                 title="instagram"
                 className="flex h-7 w-7 items-center justify-center rounded-full border border-gray-700 bg-transparent text-white transition-all duration-200 hover:border-teal-600 hover:bg-teal-600 focus:border-teal-600 focus:bg-teal-600"
               >
-              <span className="sr-only">Instagram</span>
+                <span className="sr-only">Instagram</span>
                 <svg
                   className="h-4 w-4"
                   xmlns="http://www.w3.org/2000/svg"
@@ -264,9 +267,9 @@ const Footer = () => {
 
             <li>
               <a
-              href="https://github.com/Hunter-7010"
-              target="_blank"
-              rel="noreferrer"
+                href="https://github.com/Hunter-7010"
+                target="_blank"
+                rel="noreferrer"
                 title="github"
                 className="flex h-7 w-7 items-center justify-center rounded-full border border-gray-700 bg-transparent text-white transition-all duration-200 hover:border-teal-600 hover:bg-teal-600 focus:border-teal-600 focus:bg-teal-600"
               >
@@ -281,6 +284,23 @@ const Footer = () => {
                     fillRule="evenodd"
                     clipRule="evenodd"
                     d="M12.026 2c-5.509 0-9.974 4.465-9.974 9.974 0 4.406 2.857 8.145 6.821 9.465.499.09.679-.217.679-.481 0-.237-.008-.865-.011-1.696-2.775.602-3.361-1.338-3.361-1.338-.452-1.152-1.107-1.459-1.107-1.459-.905-.619.069-.605.069-.605 1.002.07 1.527 1.028 1.527 1.028.89 1.524 2.336 1.084 2.902.829.091-.645.351-1.085.635-1.334-2.214-.251-4.542-1.107-4.542-4.93 0-1.087.389-1.979 1.024-2.675-.101-.253-.446-1.268.099-2.64 0 0 .837-.269 2.742 1.021a9.582 9.582 0 0 1 2.496-.336 9.554 9.554 0 0 1 2.496.336c1.906-1.291 2.742-1.021 2.742-1.021.545 1.372.203 2.387.099 2.64.64.696 1.024 1.587 1.024 2.675 0 3.833-2.33 4.675-4.552 4.922.355.308.675.916.675 1.846 0 1.334-.012 2.41-.012 2.737 0 .267.178.577.687.479C19.146 20.115 22 16.379 22 11.974 22 6.465 17.535 2 12.026 2z"
+                  ></path>
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.linkedin.com/in/zaki-orya/"
+                target="_blank"
+                rel="noreferrer"
+                title="linkedin"
+                className="flex h-7 w-7 items-center justify-center rounded-full border border-gray-700 bg-transparent text-white transition-all duration-200 hover:border-teal-600 hover:bg-teal-600 focus:border-teal-600 focus:bg-teal-600"
+              >
+                <span className="sr-only">Linkedin</span>
+                <svg className="h-4 w-4" viewBox="0 0 128 128">
+                  <path
+                    fill="#fff"
+                    d="M21.06 48.73h18.11V107H21.06zm9.06-29a10.5 10.5 0 11-10.5 10.49 10.5 10.5 0 0110.5-10.49M50.53 48.73h17.36v8h.24c2.42-4.58 8.32-9.41 17.13-9.41C103.6 47.28 107 59.35 107 75v32H88.89V78.65c0-6.75-.12-15.44-9.41-15.44s-10.87 7.36-10.87 15V107H50.53z"
                   ></path>
                 </svg>
               </a>
