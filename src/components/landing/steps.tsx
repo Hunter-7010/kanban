@@ -1,14 +1,17 @@
 const Steps = () => {
   return (
     <section className="relative py-10 sm:py-16 lg:py-24">
-      <div className="absolute bottom-0 w-full hidden md:block">
+      <div className="absolute bottom-0 hidden w-full md:block">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1921 531"
           xmlSpace="preserve"
           className="fill-teal-900"
         >
-          <path className="" d="M1921 0v531H0l1-416c109.65 95.78 263.84 197.12 420 165 123.13-25.33 146.19-112.79 288-169 182.97-72.52 318.11 4.31 522 27 159 17.69 390.56 5.87 690-138z"></path>
+          <path
+            className=""
+            d="M1921 0v531H0l1-416c109.65 95.78 263.84 197.12 420 165 123.13-25.33 146.19-112.79 288-169 182.97-72.52 318.11 4.31 522 27 159 17.69 390.56 5.87 690-138z"
+          ></path>
         </svg>
       </div>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -17,8 +20,8 @@ const Steps = () => {
             How does it work?
           </h2>
           <p className="mx-auto mt-4 max-w-lg text-base leading-relaxed text-teal-600 opacity-60">
-            Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
-            sint. Velit officia consequat duis.
+            Start using our task management platform by logging in with your
+            Google account or downloading our mobile app for iOS and Android.
           </p>
         </div>
 
@@ -37,11 +40,11 @@ const Steps = () => {
                 <span className="text-xl font-semibold text-teal-700"> 1 </span>
               </div>
               <h3 className="mt-6 text-xl font-semibold leading-tight md:mt-10">
-                Create a free account
+                Get Started with Google Login
               </h3>
               <p className="mt-4 text-base text-teal-600 opacity-60">
-                Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-                amet sint. Velit officia consequat duis enim velit mollit.
+                Log in with your Google account and start using our task
+                management app today, for a simple and hassle-free experience.
               </p>
             </div>
             <div>
@@ -49,11 +52,12 @@ const Steps = () => {
                 <span className="text-xl font-semibold text-teal-700"> 2 </span>
               </div>
               <h3 className="mt-6 text-xl font-semibold leading-tight md:mt-10">
-                Build your website
+                Download Our App and Stay Productive On-the-Go
               </h3>
               <p className="mt-4 text-base text-teal-600 opacity-60">
-                Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-                amet sint. Velit officia consequat duis enim velit mollit.
+                Download our task management app on iOS and Android and stay
+                productive on-the-go, with all the features of our website at
+                your fingertips.
               </p>
             </div>
 
@@ -62,11 +66,11 @@ const Steps = () => {
                 <span className="text-xl font-semibold text-teal-700"> 3 </span>
               </div>
               <h3 className="mt-6 text-xl font-semibold leading-tight md:mt-10">
-                Release & Launch
+                Start using our app
               </h3>
               <p className="mt-4 text-base text-teal-600 opacity-60">
-                Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-                amet sint. Velit officia consequat duis enim velit mollit.
+                You're good to go to start using our user-friendly task
+                management app.
               </p>
             </div>
           </div>

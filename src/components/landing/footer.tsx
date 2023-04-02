@@ -195,11 +195,9 @@ const Footer = () => {
         <hr className="mt-16 mb-10 border-teal-900 border-opacity-70" />
 
         <div className="flex flex-wrap items-center justify-between">
-          <img
-            className="auto h-8 md:order-1"
-            src="https://cdn.rareblocks.xyz/collection/celebration/images/logo-alt.svg"
-            alt=""
-          />
+        <span className="self-center whitespace-nowrap text-3xl font-semibold text-white">
+          Kanban
+          </span>
 
           <ul className="flex items-center space-x-3 md:order-3">
             <li>
@@ -278,7 +276,7 @@ const Footer = () => {
           </ul>
 
           <p className="mt-8 w-full text-center text-sm text-gray-100 md:order-2 md:mt-0 md:w-auto">
-            © Copyright 2021, All Rights Reserved by Postcraft
+            © Copyright 2023, All Rights Reserved
           </p>
         </div>
       </div>

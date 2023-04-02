@@ -21,11 +21,10 @@ const Features = () => {
               </svg>
             </div>
             <h3 className="mt-8 text-lg font-semibold text-black">
-              Secured Payments
+              Secured Login
             </h3>
             <p className="mt-4 text-sm text-gray-600">
-              Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-              amet sint. Velit officia consequat duis enim velit mollit.
+              Our task management website uses Google authentication
             </p>
           </div>
 
@@ -50,8 +49,9 @@ const Features = () => {
               Fast & Easy to Load
             </h3>
             <p className="mt-4 text-sm text-gray-600">
-              Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-              amet sint. Velit officia consequat duis enim velit mollit.
+              Our task management website delivers lightning-fast performance,
+              ensuring optimal efficiency and productivity, with quick and easy
+              loading times.
             </p>
           </div>
 
@@ -76,8 +76,8 @@ const Features = () => {
               Light & Dark Version
             </h3>
             <p className="mt-4 text-sm text-gray-600">
-              Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-              amet sint. Velit officia consequat duis enim velit mollit.
+              Choose between light and dark modes to personalize your task
+              management website experience.
             </p>
           </div>
 
@@ -99,11 +99,12 @@ const Features = () => {
               </svg>
             </div>
             <h3 className="mt-8 text-lg font-semibold text-black">
-              Filter Blocks
+              Download Our App on mobile
             </h3>
             <p className="mt-4 text-sm text-gray-600">
-              Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-              amet sint. Velit officia consequat duis enim velit mollit.
+              Access our task management platform on-the-go by downloading our
+              app on iOS and Android, so you can stay productive wherever you
+              are.
             </p>
           </div>
         </div>

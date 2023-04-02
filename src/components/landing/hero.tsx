@@ -16,12 +16,11 @@ const Hero = () => {
           <h1 className="text-4xl font-bold sm:text-6xl">
             <span className="bg-gradient-to-r from-green-300 to-white bg-clip-text text-transparent">
               {" "}
-              Simplified credit cards for students{" "}
+              Simplified Task Management{" "}
             </span>
           </h1>
           <p className="mt-5 text-base text-white sm:text-xl">
-            No more hassle taking loans and making payments. Try Postcrats
-            credit card, make your life simple.
+          Say goodbye to the chaos and confusion of juggling multiple projects and deadlines
           </p>
           {!sessionData && (
             <a
@@ -164,7 +163,7 @@ const Hero = () => {
                 />
               </svg>
               <p className="ml-3 text-sm text-white">
-                Secured & safe online payment
+                Secured & safe
               </p>
             </div>
           </div>

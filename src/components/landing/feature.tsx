@@ -2,7 +2,7 @@ const Feature = () => {
   return (
     <section className="py-10 sm:py-16 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-xl text-center">
+        {/* <div className="mx-auto max-w-xl text-center">
           <p className="text-sm font-semibold uppercase tracking-widest text-teal-400">
             130+ Handcoded Blocks
           </p>
@@ -10,7 +10,7 @@ const Feature = () => {
           <h2 className="mt-6 text-3xl font-bold leading-tight text-teal-50 sm:text-4xl lg:text-5xl">
             Celebration helps you build beautiful website
           </h2>
-        </div>
+        </div> */}
 
         <div className="mt-12 grid grid-cols-1 items-center gap-y-10 gap-x-4 sm:mt-20 lg:grid-cols-5">
           <div className="space-y-8 lg:col-span-2 lg:space-y-12 lg:pr-16 xl:pr-24">
@@ -31,11 +31,11 @@ const Feature = () => {
               </svg>
               <div className="ml-5">
                 <h3 className="text-xl font-semibold text-teal-50">
-                  Simply Copy & Paste
+                  Streamline Your Tasks Effortlessly
                 </h3>
                 <p className="mt-3 text-base text-teal-500 opacity-60">
-                  Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-                  amet sint.
+                  Get more done in less time by easily managing your tasks with
+                  our user-friendly platform.
                 </p>
               </div>
             </div>
@@ -57,11 +57,11 @@ const Feature = () => {
               </svg>
               <div className="ml-5">
                 <h3 className="text-xl font-semibold text-teal-50">
-                  Easy to Customize
+                  Tailor Your Workflow with Ease
                 </h3>
                 <p className="mt-3 text-base text-teal-500 opacity-60">
-                  Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-                  amet sint.
+                  Customize your workflow effortlessly with our user-friendly
+                  task management platform.
                 </p>
               </div>
             </div>
@@ -83,11 +83,11 @@ const Feature = () => {
               </svg>
               <div className="ml-5">
                 <h3 className="text-xl font-semibold text-teal-50">
-                  Made with TailwindCSS
+                  Expertly Crafted for Seamless Productivity
                 </h3>
                 <p className="mt-3 text-base text-teal-500 opacity-60">
-                  Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-                  amet sint.
+                  Our task management website is expertly crafted for seamless
+                  productivity.
                 </p>
               </div>
             </div>
