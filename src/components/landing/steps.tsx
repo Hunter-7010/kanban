@@ -69,7 +69,7 @@ const Steps = () => {
                 Start using our app
               </h3>
               <p className="mt-4 text-base text-teal-600 opacity-60">
-                You're good to go to start using our user-friendly task
+                You&lsquo;re good to go to start using our user-friendly task
                 management app.
               </p>
             </div>
