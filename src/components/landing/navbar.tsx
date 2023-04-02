@@ -9,12 +9,8 @@ const Navbar = () => {
     <nav className="rounded border-gray-200 bg-transparent px-2 py-2.5 sm:px-4">
       <div className="container mx-auto flex flex-wrap items-center justify-between">
         <h1 className="flex items-center">
-          <span className="self-center whitespace-nowrap text-xl font-semibold text-white">
-            <img
-              className="h-8 w-auto"
-              src="https://cdn.rareblocks.xyz/collection/celebration/images/hero/5/logo.svg"
-              alt=""
-            />
+          <span className="self-center whitespace-nowrap text-3xl font-semibold text-white">
+          Kanban
           </span>
         </h1>
         <div className="sm:ml-auto md:order-last lg:flex lg:items-center lg:justify-end lg:space-x-6">

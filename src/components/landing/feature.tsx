@@ -96,7 +96,7 @@ const Feature = () => {
           <div className="lg:col-span-3">
             <img
               className="w-full rounded-lg shadow-xl"
-              src="https://cdn.rareblocks.xyz/collection/celebration/images/features/7/dashboard-screenshot.png"
+              src="/dashboard.png"
               alt=""
             />
           </div>

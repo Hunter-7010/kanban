@@ -270,7 +270,11 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
                               checked={subtask.finished}
                               className="h-4 w-4 cursor-pointer rounded border-gray-300 bg-gray-100 text-indigo-600 focus:ring-2 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-800 dark:ring-offset-gray-800 dark:focus:ring-indigo-600"
                             />
-                            <label className="ml-2 cursor-pointer text-sm font-medium text-gray-900 dark:text-gray-100">
+                            <label
+                              className={`ml-2 cursor-pointer text-sm ${
+                                subtask.finished ? "line-through" : ""
+                              } font-medium text-gray-900 dark:text-gray-100`}
+                            >
                               {subtask.title}
                             </label>
                           </div>

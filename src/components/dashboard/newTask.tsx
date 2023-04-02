@@ -179,7 +179,7 @@ export default function NewTask({ boardId }: Props) {
                         htmlFor="title"
                         className="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
                       >
-                        Title
+                        Column Title
                       </label>
                       <input
                         type="text"
@@ -198,7 +198,7 @@ export default function NewTask({ boardId }: Props) {
                       />
                     </div>
 
-                    <div className="sm:col-span-2">
+                    {/* <div className="sm:col-span-2">
                       <label
                         htmlFor="description"
                         className="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-400"
@@ -216,7 +216,7 @@ export default function NewTask({ boardId }: Props) {
                         placeholder="description..."
                         id="description"
                       ></textarea>
-                    </div>
+                    </div> */}
                     <div ref={parent}>
                       {fields.map((subTask, ind) => (
                         <div key={subTask.id} className="flex w-full items-end">
@@ -241,7 +241,7 @@ export default function NewTask({ boardId }: Props) {
                               htmlFor={`title${ind}`}
                               className="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
                             >
-                              Title
+                              Task Title
                             </label>
                             <input
                               type="text"
