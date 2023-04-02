@@ -248,7 +248,7 @@ const Footer = () => {
                 title="instagram"
                 className="flex h-7 w-7 items-center justify-center rounded-full border border-gray-700 bg-transparent text-white transition-all duration-200 hover:border-teal-600 hover:bg-teal-600 focus:border-teal-600 focus:bg-teal-600"
               >
-                <span className="sr-only">Instagram</span>
+              <span className="sr-only">Instagram</span>
                 <svg
                   className="h-4 w-4"
                   xmlns="http://www.w3.org/2000/svg"
@@ -270,13 +270,13 @@ const Footer = () => {
                 title="github"
                 className="flex h-7 w-7 items-center justify-center rounded-full border border-gray-700 bg-transparent text-white transition-all duration-200 hover:border-teal-600 hover:bg-teal-600 focus:border-teal-600 focus:bg-teal-600"
               >
+                <span className="sr-only">GitHub</span>
                 <svg
                   className="h-4 w-4"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                 >
-                   <span className="sr-only">GitHub</span>
                   <path
                     fillRule="evenodd"
                     clipRule="evenodd"
