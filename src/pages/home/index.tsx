@@ -18,6 +18,7 @@ import NewSubTask from "~/components/dashboard/newSubtask";
 import SubTaskView from "~/components/dashboard/subtaskView";
 import SideBar from "~/components/dashboard/sidebar";
 import BoardOptionsDropdown from "~/components/dashboard/boardOptionsDropdown";
+import NewSubTaskInComponent from "~/components/dashboard/newSubtaskInComponent";
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -188,8 +189,9 @@ const Home: NextPage = () => {
                           } of ${subTask.subtasks.length} subtasks`}
                         </p>
                       </div>
-                    </div>
+                    </div>  
                   ))}
+              <NewSubTaskInComponent titleId={task.id}/>
                 </div>
               ))}
 

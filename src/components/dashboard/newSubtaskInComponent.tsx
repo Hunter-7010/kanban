@@ -10,22 +10,12 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import X from "../svgs/x";
 import UpArrow from "../svgs/upArrow";
 import DownArrow from "../svgs/downArrow";
-import SubTasksAutoComplete from "./subtasksAutoComplete";
-type Props = {
-  task: {
-    id: string;
-    title: string;
-    boardId: string;
-    color: string;
 
-    createdAt: Date;
-    updatedAt: Date;
-    subTasks: [];
-  }[];
+type Props = {
+ titleId: string
 };
-export default function NewSubTask({ task }: Props) {
-  const taskTitles = [] as { title: string; id: string }[];
-  task.map((task) => taskTitles.push({ id: task.id, title: task.title }));
+export default function NewSubTaskInComponent({ titleId }: Props) {
+console.log(titleId);
   const [isOpen, setIsOpen] = useState(false);
   const ctx = api.useContext();
 
@@ -39,7 +29,7 @@ export default function NewSubTask({ task }: Props) {
   //react hook form
 
   const taskFormSchema = z.object({
-    titleId: z.string().min(24, { message: "Must be selected from the list" }),
+    titleId: z.string().min(24, { message: "Something went wrong" }),
     title: z.string(),
     description: z.string(),
     subTasks: z.array(
@@ -55,7 +45,7 @@ export default function NewSubTask({ task }: Props) {
   //default data
   const formData = {
     title: "",
-    titleId: "",
+    titleId: titleId,
     description: "",
     subTasks: [{ title: "", finished: false }],
   };
@@ -100,8 +90,7 @@ export default function NewSubTask({ task }: Props) {
       });
       setIsOpen(false);
       reset();
-        return ctx.dashboard.invalidate();
-     
+      return ctx.dashboard.invalidate();
     },
     onError: () => {
       toast.error(
@@ -119,30 +108,20 @@ export default function NewSubTask({ task }: Props) {
       );
     },
   });
-  const onOptionClickHandler = (subtask: string, id: string) => {
-    setValue("titleId", id);
-  };
-  //eslint-disable-next-line
+
   const formSubmitHandler: SubmitHandler<taskFormSchemaType> = (data) => {
-    mutate(data);
+    void mutate(data);
   };
   const [parent] = useAutoAnimate();
   const [idErrorAnimationParent] = useAutoAnimate();
 
   return (
     <>
-      <button
-        onClick={openModal}
-        className="hidden items-center justify-center rounded-l-full rounded-r-full bg-indigo-500 py-2.5 px-6 text-white duration-300 hover:opacity-70 md:flex"
-      >
-        + Add New Task
-      </button>
-      <button
-        onClick={openModal}
-        className="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-500 text-white duration-300 hover:opacity-70 md:hidden"
-      >
-        +
-      </button>
+      <div onClick={openModal} className="cursor-pointer group flex min-h-[121px] items-center justify-center rounded-lg bg-white shadow-lg  duration-300 hover:opacity-90 hover:shadow-sm dark:bg-gray-700">
+        <div className="flex w-full flex-col items-center justify-center px-4">
+          <h4 className="mb-1 w-64 truncate text-center text-indigo-300 font-semibold group-hover:text-indigo-500">+ Add new Task</h4>
+        </div>
+      </div>
 
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
@@ -189,22 +168,17 @@ export default function NewSubTask({ task }: Props) {
                     className=" w-full space-y-8"
                   >
                     <div ref={idErrorAnimationParent}>
-                      <label
-                        htmlFor="title"
-                        className="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
-                      >
-                        Column Title
-                      </label>
+                     
                       <input
                         type="hidden"
                         readOnly
-                        id="title"
+                        value={titleId}
                         {...register("titleId")}
                       />
-                      <SubTasksAutoComplete
+                      {/* <SubTasksAutoComplete
                         subTasks={taskTitles}
                         onOptionClick={onOptionClickHandler}
-                      />
+                      /> */}
                       {errors.titleId && (
                         <p className="mt-1 text-sm text-red-600">
                           {errors.titleId.message}

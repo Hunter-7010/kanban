@@ -231,13 +231,13 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
                     as="h3"
                     className="relative mb-4 flex justify-between text-lg font-medium leading-6 text-gray-900 dark:text-white"
                   >
-                    <p className="mb-4 w-3/4">
+                    <div className="mb-4 w-3/4">
                       <h4 className="mb-3 overflow-auto">{subtasks.title}</h4>
 
                       <h4 className="block overflow-auto text-sm font-medium text-gray-500 dark:text-gray-400">
                         {subtasks.description}
                       </h4>
-                    </p>
+                    </div>
 
                     <a
                       className=" absolute -right-4 -top-6 cursor-pointer items-start px-4 text-gray-500 duration-300 hover:text-gray-400 md:w-auto"
@@ -267,6 +267,7 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
                           >
                             <input
                               type="checkbox"
+                              readOnly
                               checked={subtask.finished}
                               className="h-4 w-4 cursor-pointer rounded border-gray-300 bg-gray-100 text-indigo-600 focus:ring-2 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-800 dark:ring-offset-gray-800 dark:focus:ring-indigo-600"
                             />
@@ -345,7 +346,7 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
                                   htmlFor={`title${ind}`}
                                   className="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
                                 >
-                                  Title
+                                  SubTask Title
                                 </label>
                                 <input
                                   type="text"
@@ -397,7 +398,7 @@ export default function SubTaskView({ subTaskId, subtasks }: Props) {
                           type="submit"
                           className="w-full rounded-md bg-indigo-700 py-3 px-5 text-center text-sm font-medium text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
                         >
-                          Add Task
+                          Add SubTask
                         </button>
                       </form>
                     ) : (
