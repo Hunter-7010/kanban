@@ -76,7 +76,7 @@ const Home: NextPage = () => {
           </div>
           <div className="flex h-[41.2rem] w-full flex-col  text-gray-400 antialiased">
             <DarkMode />
-      
+
             <h2 className="p-5 text-sm font-semibold tracking-widest">
               ALL BOARDS ({boardData?.boardsCount})
             </h2>
@@ -106,7 +106,6 @@ const Home: NextPage = () => {
           <SideBar boardCount={boardData?.boardsCount}>
             <div className="flex w-full flex-col justify-center">
               <DarkMode />
-             
             </div>
 
             <div className="relative space-y-1 overflow-y-auto  pr-6">
@@ -163,7 +162,7 @@ const Home: NextPage = () => {
                   key={task.id}
                   className="h-[580px] w-[280px] space-y-6 overflow-y-auto rounded-lg md:my-4 md:ml-16"
                 >
-                  <div className="flex items-center space-x-2 pt-8">
+                  <div className="flex sticky top-0 z-10 items-center space-x-2 pt-8">
                     <div
                       className="h-5 w-5 rounded-full"
                       style={{ backgroundColor: "#" + task.color }}
@@ -189,9 +188,9 @@ const Home: NextPage = () => {
                           } of ${subTask.subtasks.length} subtasks`}
                         </p>
                       </div>
-                    </div>  
+                    </div>
                   ))}
-              <NewSubTaskInComponent titleId={task.id}/>
+                  <NewSubTaskInComponent titleId={task.id} />
                 </div>
               ))}
 

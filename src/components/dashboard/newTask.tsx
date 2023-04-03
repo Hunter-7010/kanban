@@ -87,9 +87,8 @@ export default function NewTask({ boardId }: Props) {
       });
       setIsOpen(false);
       reset();
- 
-        return ctx.dashboard.invalidate();
 
+      return ctx.dashboard.invalidate();
     },
     onError: () => {
       toast.error(
@@ -117,7 +116,7 @@ export default function NewTask({ boardId }: Props) {
     <>
       <div
         onClick={openModal}
-        className="group flex h-[550px] w-[280px] cursor-pointer items-center justify-center rounded-lg bg-gradient-to-b from-gray-300 to-white dark:from-gray-700 md:my-12 md:ml-16"
+        className="group flex h-[550px] w-[280px] mt-12 cursor-pointer items-center justify-center rounded-lg bg-gradient-to-b from-gray-300 to-white dark:from-gray-700 md:my-12 md:ml-16"
       >
         <h2 className="text-2xl font-bold text-gray-400 duration-300 group-hover:text-indigo-600 dark:text-white">
           + New Column
