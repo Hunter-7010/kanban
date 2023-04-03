@@ -15,7 +15,6 @@ type Props = {
  titleId: string
 };
 export default function NewSubTaskInComponent({ titleId }: Props) {
-console.log(titleId);
   const [isOpen, setIsOpen] = useState(false);
   const ctx = api.useContext();
 
