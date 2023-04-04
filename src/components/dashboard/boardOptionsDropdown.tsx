@@ -1,47 +1,18 @@
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { api } from "~/utils/api";
-import { toast } from "react-toastify";
 import { signOut,useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+
+import DeleteConfirmation from "./deleteConfirmation";
 type Props = {
   boardId: string;
 };
 
 export default function BoardOptionsDropdown({ boardId }: Props) {
-  const ctx = api.useContext();
   const { data: sessionData } = useSession();
   const router = useRouter();
-  const { mutate: deleteBoard } = api.dashboard.deleteOneBoard.useMutation({
-    onSuccess: () => {
-      toast.success("Board Deleted!", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: localStorage.getItem("darkMode") === "true" ? "dark" : "light",
-      });
-      return ctx.dashboard.invalidate();
-    },
-    onError: () => {
-      toast.error("Something went wrong", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: localStorage.getItem("darkMode") === "true" ? "dark" : "light",
-      });
-    },
-  });
-  const deleteHandler = () => {
-    deleteBoard({ boardId: boardId });
-  };
+
   const signOutHandler = () => {
     void signOut();
     void router.push("/");
@@ -126,7 +97,7 @@ export default function BoardOptionsDropdown({ boardId }: Props) {
                 </Menu.Item>
               </div>
 
-              <div className="">
+              {/* <div className="">
                 <Menu.Item>
                   <a
                     href="#"
@@ -138,7 +109,8 @@ export default function BoardOptionsDropdown({ boardId }: Props) {
                     delete
                   </a>
                 </Menu.Item>
-              </div>
+              </div> */}
+              <DeleteConfirmation boardId={boardId}/>
             </>
           )}
         </Menu.Items>

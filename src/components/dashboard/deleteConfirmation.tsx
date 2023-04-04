@@ -1,13 +1,41 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
+import { toast } from "react-toastify";
 import { api } from "~/utils/api";
 
 type Props = {
-    boardId: string
+  boardId: string;
 };
-export default function DeleteConfirmation({boardId}: Props) {
+export default function DeleteConfirmation({ boardId }: Props) {
   const [isOpen, setIsOpen] = useState(false);
-
+  const ctx = api.useContext();
+  const { mutate: deleteBoard } = api.dashboard.deleteOneBoard.useMutation({
+    onSuccess: () => {
+      toast.success("Board Deleted!", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: localStorage.getItem("darkMode") === "true" ? "dark" : "light",
+      });
+      return ctx.dashboard.invalidate();
+    },
+    onError: () => {
+      toast.error("Something went wrong", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: localStorage.getItem("darkMode") === "true" ? "dark" : "light",
+      });
+    },
+  });
   function closeModal() {
     setIsOpen(false);
   }
@@ -16,22 +44,24 @@ export default function DeleteConfirmation({boardId}: Props) {
     setIsOpen(true);
   }
   const onDeleteClickHandler = () => {
-    console.log("from delete",boardId)
+    deleteBoard({boardId:boardId})
+    console.log("from delete", boardId);
     // closeModal();
   };
 
   return (
     <>
       <div className="">
-        <button
-          type="button"
+        <a
+          href="#"
+          className={`block rounded-b-md px-4 py-3 text-sm 
+                   text-red-500 hover:bg-gray-100  hover:opacity-80
+                  `}
           onClick={openModal}
-        //   className="h-10 w-56 rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 duration-300 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 dark:bg-red-200 dark:hover:bg-red-300 dark:focus-visible:ring-red-600"
         >
-          Delete
-        </button> 
+          delete
+        </a>
       </div>
-
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child
@@ -57,7 +87,7 @@ export default function DeleteConfirmation({boardId}: Props) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-gray-700 ">
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-gray-700">
                   <Dialog.Title
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900 dark:text-white"
