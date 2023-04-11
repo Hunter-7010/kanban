@@ -156,11 +156,11 @@ const Home: NextPage = () => {
                 </div>
               </div>
             </div>
-            <div className="flex h-full w-full flex-wrap justify-center overflow-y-auto md:justify-start">
+            <div className="flex h-full px-4 w-full flex-wrap gap-x-12 justify-center overflow-y-auto md:justify-start">
               {oneBoardData.tasks.map((task) => (
                 <div
                   key={task.id}
-                  className="h-[580px] w-[280px] space-y-6 overflow-y-auto rounded-lg md:my-4 md:ml-16"
+                  className="h-[580px] mx-auto w-[280px] space-y-6 overflow-y-auto rounded-lg md:my-4"
                 >
                   <div className="flex sticky top-0 z-10 items-center space-x-2 pt-8">
                     <div

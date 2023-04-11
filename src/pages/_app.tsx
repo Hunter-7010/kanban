@@ -25,8 +25,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
           name="apple-mobile-web-app-status-bar-style"
           content="black-translucent"
         />
-<link rel="manifest" href="/site.webmanifest" />
-        <meta name="viewport" content="initial-scale=1, viewport-fit=cover,user-scalable=no" />
+        <link rel="manifest" href="/site.webmanifest" />
+        <meta
+          name="viewport"
+          content="initial-scale=1, viewport-fit=cover,user-scalable=no"
+        />
         <link
           rel="icon"
           type="image/png"
@@ -187,12 +190,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
         />
       </Head>
       <SessionProvider session={session}>
-      <Provider store={store}>
-        <Component {...pageProps} />
-        <ToastContainer />
-      </Provider>
+        <Provider store={store}>
+          <Component {...pageProps} />
+          <ToastContainer />
+        </Provider>
       </SessionProvider>
-
     </>
   );
 };
