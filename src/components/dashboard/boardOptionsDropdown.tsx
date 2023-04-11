@@ -14,8 +14,8 @@ export default function BoardOptionsDropdown({ boardId }: Props) {
   const router = useRouter();
 
   const signOutHandler = () => {
-    void signOut();
     void router.push("/");
+    void signOut();
   };
   return (
     <Menu as="div" className="relative inline-block text-left">

@@ -23,9 +23,9 @@ import NewSubTaskInComponent from "~/components/dashboard/newSubtaskInComponent"
 const Home: NextPage = () => {
   const router = useRouter();
   const [boardId, setBoardId] = useState("");
-  const { data: sessionData } = useSession();
+  const { data: sessionData,status } = useSession();
   useEffect(() => {
-    if (!sessionData) {
+    if (status ==="unauthenticated") {
       void router.push("/");
       toast.warning("Unauthorized!", {
         position: "top-right",
