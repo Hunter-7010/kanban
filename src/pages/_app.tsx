@@ -8,6 +8,7 @@ import Head from "next/head";
 
 import "~/styles/globals.css";
 import { ToastContainer } from "react-toastify";
+import Script from "next/script";
 import "react-toastify/dist/ReactToastify.css";
 
 import { store } from "~/store/store";
@@ -192,6 +193,12 @@ const MyApp: AppType<{ session: Session | null }> = ({
       <SessionProvider session={session}>
         <Provider store={store}>
           <Component {...pageProps} />
+          <Script
+            async
+            defer
+            data-website-id="f5a278a6-121c-4fc4-9299-27dbd4c50ab7"
+            src="https://umami-production-f85b.up.railway.app/umami.js"
+          />
           <ToastContainer />
         </Provider>
       </SessionProvider>
