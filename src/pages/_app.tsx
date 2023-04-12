@@ -196,8 +196,8 @@ const MyApp: AppType<{ session: Session | null }> = ({
           <Script
             async
             defer
-            data-website-id="f5a278a6-121c-4fc4-9299-27dbd4c50ab7"
-            src="https://umami-production-f85b.up.railway.app/umami.js"
+            data-website-id="8fda16a7-7974-4a4d-80fd-29c1c5d6e4e9"
+            src="https://umamianalytics.netlify.app/umami.js"
           />
           <ToastContainer />
         </Provider>
